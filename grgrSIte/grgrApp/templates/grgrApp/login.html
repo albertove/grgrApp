@@ -1,0 +1,31 @@
+{% extends "grgrApp/base.html" %}
+{% block content %}
+<h2>LogIn</h2>
+{% if form.errors %}
+	<p>Please correct the error{{ form.errors|pluralize }} below:</p>
+	<ul>
+	{% for field in form %}
+		{{ field.errors }}
+	{% endfor %}
+	</ul>
+{% endif %}
+{% if errors %}
+    <p>Please correct the error{{ form.errors|pluralize }} below:</p>
+    {% for error in errors %}
+        <ul>
+            <li class="req">{{ error }}</li>
+        </ul>
+    {% endfor %}
+{% endif %}
+
+<form action="{% url 'login' %}" method="POST">
+	{{ form.non_field_errors }}
+	{% for field in form %}
+    <div class="fieldWrapper">
+	   <p>{{ field.label_tag }} {{ field }}</p>
+    </div>
+	{% endfor %}
+	{% csrf_token %}
+	<p><input type="submit" class='button' value="LogIn" /></p>
+</form>
+{% endblock %}

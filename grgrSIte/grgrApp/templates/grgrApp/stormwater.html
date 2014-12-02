@@ -1,0 +1,44 @@
+{% extends "grgrApp/base_app.html" %}
+{% block content %}
+<h2>Storm water handling</h2>
+<form action="{% url 'stormwater' %}" method="POST" id="id_stormwater_form">
+    {{ form.non_field_errors }}
+        <div id="div_image">
+            <h3>Pavement</h3>
+            {% if form.errors %}<span class='req'>This field is requiered</span>{%endif%}
+            <li><span class="styled-select-storm">{{ form.construction_type }}</span><span class='req'>*</span></li>
+            <img id="id_imgConstruction" class="imagestorm" src="" />
+        </div>
+        <div id="div_fields">
+            <h3>Storm water construction</h3>
+            <p>Fill in the fields below and then click in Update value to calculate depth draining pipe and ground water level fields.</p>
+            <li style="font: normal 11px Tahoma">{{ form.pavement_area.label_tag}}{{ form.pavement_area }}[m<sup>2</sup>]</li>
+            <li style="font: normal 11px Tahoma">{{ form.num_draining_pipes.label_tag }}{{ form.num_draining_pipes }}</li>
+            <li style="font: normal 11px Tahoma">{{ form.depth_draining_pipe.label_tag }}{{ form.depth_draining_pipe }}[m]</li>
+            <li style="font: normal 11px Tahoma">{{ form.ground_water_level.label_tag }}{{ form.ground_water_level }}[mm]</li>
+            <li><input type='submit' class='button' name="storm_update_value" value='Update values' title="Calculate depth draining pipe and ground water level fields" /></li>
+        </div>
+        <div id="div_ditchtype">
+            <h3>Ditch type</h3>
+            <img id="id_imgDitchtype" class="imageDitch" src="" />
+        </div>
+        <div id="div_ditchtype_fields">
+            {% for field in form %}
+                {% if field.label != 'Pavement area' and field.label != 'Construction type' and field.label != 'Biofilter type' and field.label != 'Depth draining pipe' and field.label != 'Ground water level' and field.label != 'Number of draining pipes under permeable surface' %}
+                    {% if field.label == 'Depth draining pipe (bio)'  %}
+                        <li id="{{field.id_for_label}}_li"> {{ field.label_tag }}{{ field }} <input type='button' class='button' id="id_storm_depth_value" name="storm_depth_value" value='Calculate' /></li>
+                    {% elif field.label == 'Ground water level (bio)' %}
+                        <li id="{{field.id_for_label}}_li"> {{ field.label_tag }}{{ field }}<input type='button' class='button' id="id_storm_ground_value" name="storm_ground_value" value='Calculate' /></li>
+
+                    {% else %}
+                        <li id="{{field.id_for_label}}_li"> {{ field.label_tag }}{{ field }}</li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% csrf_token %}
+    <ul>
+        <li><span class='back'><a href="{% url 'parameter' %}"><input type="button" class='button' value="<-- Back" /></a></span><span class='next'><input type="submit" class='button' value="Next -->"  /></span></li>
+    </ul>
+</form>
+{% endblock %}

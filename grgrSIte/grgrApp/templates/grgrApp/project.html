@@ -1,0 +1,14 @@
+{% extends "grgrApp/base_app.html" %}
+{% block content %}
+<h2>General data</h2>
+<form action="{% url 'project' %}" method="POST">
+    {{ form.non_field_errors }}
+	<ul>
+    {% for field in form %}
+		<li>{{ field.label_tag }} {{ field }} {% if field.field.required %}<span class='req'>*</span> {% if form.errors %}<span class='req'>This field is requiered</span>{%endif%}{% endif %}</li>
+	{% endfor %}
+	{% csrf_token %}
+    <li><span class='back'><a href="" disabled><input type="button" class='button' value="<-- Back" /></a></span><span class='next'><input type="submit" class='button' value="Next -->"  /></span></li>
+	</ul>
+</form>
+{% endblock %}

@@ -1,0 +1,149 @@
+body{
+	margin-top: 5%;
+	background-color: #EEE;
+}
+
+#header{
+	background-color: #FFF;
+	padding: 0;
+	margin: 0;
+	border-bottom: 2px solid gray;
+}
+
+#header h1{
+	font-family: Rockwell,Arial;
+	font-size: 36px;
+	/*text-transform: none;
+	text-decoration: none;*/
+	color: #3A3;
+}
+
+#menu{
+	line-height: normal;
+	padding-top: 5px;
+	padding-bottom: 20px;
+}
+#menu ul{
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+}
+#menu li{
+	float: left;
+}
+#menu li a{
+	display: block;
+	width: 150px;
+	text-align: center;
+	color: gray;
+	text-decoration: none;
+}
+#menu li a:hover{
+	background: #eeebeb;
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    color: #e76;
+	text-decoration: none;
+}
+#layout{
+	width: 60%;
+	min-height: 450px;
+	margin: 10px auto;
+	text-align: left;
+	background-color: #FFF;
+	padding-top: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+}
+#content{
+	margin-top: 2%;
+	margin-left: 3%;
+}
+
+#content h2{	font-size: 150%;}
+
+#content p{
+	font-size: 0.8em;
+	font: normal 13px Tahoma, Geneva;
+}
+
+#content a{
+	text-decoration: none;
+	color: #AA3;
+}
+#content a:hover {
+    color: #33e;
+	text-decoration: none;
+}
+
+#content a:link{
+    color: #aa3;
+	text-decoration: none;
+}
+
+#content ul{font-size: 0.8em; font: normal 13px Tahoma, Geneva;}
+
+/*Format form*/
+fieldset{ border: 0;}
+form{ margin-bottom: 50px;}
+form li, form ul{
+	border: 0;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+form li{ clear: both; padding-bottom: 10px}
+
+label{
+	float: left;
+	width: 200px;
+	font: normal 11px Tahoma;
+	display: block;
+	text-align: left;
+	margin-right: 20px;
+	padding: 2px 0 2px 0;
+}
+
+.labellarger{ width: 200px; padding: 2px 0 2px 0;}
+
+input{
+	display: block;
+	width: 200px;
+	font: normal 11px Tahoma;
+	text-align: center;
+	color: white;
+	border: 1px solid #AAD;
+	background-color: white;
+	padding: 2px 0 2px 0;
+	margin-right: 2px;
+	float: left;
+}
+submit{background: #FFF; border: 0; cursor: pointer;}
+
+.buttonok{ background-color: #00B71E;}
+.inputshort{ width: 80px; }
+.choose{ width: 20px;}
+
+checkbox{
+	display: block;
+	width: 300px;
+	border: 1px solid #AAA;
+	background-color: #AAC;
+}
+
+.button{
+	background-color: #FFF;
+	border: 0;
+	font-weight: bold;
+	width: 75px;
+	cursor: pointer;
+	color: gray;
+	margin-left: 210px;
+	text-align: center;
+}
+.button:hover{ color: #33E; background: #FFF;}
+
+.errorlist {color: #000; font-size: 13px;}
+.req{ color: red;}

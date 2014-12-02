@@ -1,0 +1,50 @@
+{% extends "grgrApp/base_app.html" %}
+{% block content %}
+<h2>Application</h2>
+<form action="{% url 'parameter' %}" method="POST" id="id_parameter_form">
+    {{ form.non_field_errors }}
+    {% for field in form %}
+    {% if field.label == 'Application' or field.label == 'Type of paving' %}
+    <li><label for="{{ field.id_for_label }}" class="labeltitle">{{ field.label }}{% if field.field.required %}<span class='req'>*</span> {% if form.errors %}<span class='req'>This field is requiered</span>{%endif%}{% endif %}</label></li>
+    <table style="width:60%">
+        <tr>
+            {% for radio in field %}
+            {% if field.label == 'Application' %}
+                <td><div class="img"><a href=""><img id="img_app{{radio.choice_value}}" src="/static/grgrApp/figures/application/{{ radio.choice_value}}.png" class='imagepar'/></a></div></td>
+            {% else %}
+                <td><div class="img"><a href=""><img id="img_type{{radio.choice_value}}" src="/static/grgrApp/figures/concrete/{{ radio.choice_value}}.png" class='imagepar'/></a></div></td>
+            {% endif %}
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for radio in field %}
+            {% if field.label == 'Application' %}
+                <td><input name="{{ radio.name }}" type="radio" id="app_radio{{ radio.choice_value }}" value={{ radio.choice_value }} /></td>
+            {% else %}
+                <td><input name="{{ radio.name }}" type="radio" id="type_radio{{ radio.choice_value }}" value={{ radio.choice_value }} /></td>
+            {% endif %}
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for radio in field %}
+            <td style="text-align:center"><span id="radiolabel">{{ radio.choice_label}}</span></td>
+            {% endfor %}
+        </tr>
+    </table>
+    {% endif %}
+    {% endfor %}
+    <div id="div_coeff_inf">
+    <ul>
+    <li id="coeff" class=""><label class="labeltitle">Coefficient of infiltration</label></li>
+    {% for field in form %}
+        {% if field.label != 'Application' and field.label != 'Type of paving' %}
+            <li id="{{field.id_for_label}}" class=""> {{ field.label_tag }}{{ field }}</li>
+        {% endif %}
+    {% endfor %}
+    {% csrf_token %}
+    </ul>
+    </div>
+    <li><span class='back'><a href="{% url 'project' %}"><input type="button" class='button' value="<-- Back" /></a></span><span class='next'><input type="submit" class='button' value="Next -->"/></span></li>
+
+</form>
+{% endblock %}

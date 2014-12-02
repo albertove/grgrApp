@@ -1,0 +1,277 @@
+
+body{
+	margin-top: 5%;
+	background-color: #EEE;
+    font-family: "Open Sans","lucida grande","Segoe UI",arial,verdana,"lucida sans unicode",tahoma,sans-serif;
+}
+
+#header{
+	background-color: #FFF;
+	padding: 0;
+	margin: 0;
+	border-bottom: 2px solid gray;
+}
+
+#header h1{
+	font-family: Rockwell,Arial;
+	font-size: 36px;
+	text-transform: none;
+	text-decoration: none;
+	color: #3A3;
+}
+#header p{font-size: 12px; color:#3B3;text-align:left;}
+
+#menu{
+	line-height: normal;
+	padding-top: 5px;
+	padding-bottom: 20px;
+}
+#menu ul{
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+}
+#menu li{
+	float: left;
+}
+#menu li a{
+	display: block;
+	width: 150px;
+	text-align: center;
+	color: gray;
+	text-decoration: none;
+}
+#menu li a:hover{
+    background: #eeebeb;
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    color: #e76;
+    text-decoration: none;
+}
+
+#menu li a:active{
+	background: #eeebeb;
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    color: #e76;
+	text-decoration: none;
+}
+
+
+#layout{
+	width: 70%;
+    height: 100%;
+	margin: 10px auto;
+	text-align: left;
+	background-color: #FFF;
+	padding-top: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+}
+#content{
+	margin-top: 2%;
+	margin-left: 3%;
+}
+
+#content h2 {font-size: 150%;}
+#content h3 {font-size: 100%; margin: 1px;}
+
+#content p{
+	font-size: 0.8em;
+	font: normal 13px Tahoma, Geneva;
+}
+
+#content a{
+	text-decoration: none;
+	color: #AA3;
+}
+#content a:hover {
+    color: #33e;
+	text-decoration: none;
+}
+
+#content a:link{
+    color: #aa3;
+	text-decoration: none;
+}
+
+#content ul{font-size: 0.8em; font: normal 13px Tahoma, Geneva;}
+
+/*Format form*/
+fieldset{ border: 0;}
+form{ margin-bottom: 50px;}
+form li, form ul{
+    clear: both;
+	border: 0;
+	margin: 0;
+	padding: 10px;
+	list-style: none;
+}
+
+form label{
+	float: left;
+	width: 200px;
+	font: normal 12px Tahoma;
+	display: block;
+	text-align: left;
+	margin-right: 20px;
+	padding: 2px 0 2px 0;
+}
+
+.labeltitle{ font: bold 15px Tahoma; width: 400px;}
+.labelsubtitle{ font: bold 13px Tahoma;}
+.labellarger{ width: 300px; padding: 2px 0 2px 0;}
+.labelshort{ width: 120px; padding: 2px 0 2px 0;}
+.labelsmall{ width: 100px; font: normal 10px Tahoma; margin-right: 2px; padding: 0px; float:left; display:block;}
+textarea{display:block; float:left;}
+
+input{
+	display: block;
+	width: 200px;
+	font: normal 11px Tahoma;
+	text-align: left;
+	color: #FFF;
+	border: 1px solid #AAD;
+	background-color: #99C;
+	padding: 2px;
+	margin-right: 2px;
+	float: left;
+}
+
+select{
+    font: normal 11px Tahoma;
+	text-align: left;
+	color: #FFF;
+	border: 1px solid #AAD;
+	background-color: #99C;
+	padding: 2px;
+	margin-right: 2px;
+}
+
+.styled-select select{
+    width: 120px;
+}
+
+.styled-select-storm select{
+    width: 170px;
+}
+
+.buttonok{ background-color: #00B71E; color: #AA3; cursor: pointer;}
+.inputshort{ width: 80px; }
+.inputsummary{ background-color: #000; color: #000; width: 80px;}
+.choose{ width: 20px;}
+
+.radio{
+	text-align: center;
+	background-color: #FFF;
+}
+
+td{
+    text-align: left;
+    padding: 2px;
+    font-size: 0.8em;
+}
+
+tr{margin-left:auto; margin-right:auto;}
+
+.button{
+	background-color: #FFF;
+	border: 0;
+	font-weight: bold;
+	width: 75px;
+	color: #AAA;
+	margin-left: 210px;
+	cursor: pointer;
+}
+
+.button:hover{ color: #33E; background: #FFF;}
+
+.image{ width: 140px; display: block; margin-left:auto; margin-right:auto; }
+.imagepar{ width: 140px; display: block; margin-left:auto; margin-right:auto; }
+.imagestorm{ width: 280px; float:left; padding-left: 10px;}
+.imagesum{width: 300px; float:left; padding-left: 10px;}
+.imageDitch{ width: 350px; float:left; padding-left: 10px;}
+.errorlist {color: #000; font-size: 13px;}
+.req{ color: red; font:normal 11px Tahoma;}
+div.img a:hover img{border:2px solid #0000ff;}
+input.disabled{background-color: #dddddd; width: 120px; padding: 2px 0 2px 0;}
+input.summary{background-color: #FFF; color: #000; width: 120px; padding: 2px 0 2px 0; border: none;}
+input#id_sum_type_paving{width: 150px;}
+input#id_sum_construction_type{width: 150px; font: bold 13px Tahoma;}
+
+
+textarea#id_sum_veredict{border: 0; width:350px; height: 70px; font: bold 13px Tahoma;}
+textarea#id_sum_veredict_ditch{border: 0; width:350px; height: 70px; font: bold 13px Tahoma;}
+
+#button_traffic{color: #E33;}
+#div_image{
+    height: 300px;
+    width: 350px;
+    float: left;
+    padding: 1px;
+}
+
+#div_fields{
+    height: 300px;
+    width: 400px;
+    float: left;
+    padding: 1px;
+}
+
+#div_ditchtype{
+    width: 350px;
+    float: left;
+    padding: 1px;
+    display: none;
+}
+
+#div_ditchtype_fields{
+    width: 450px;
+    float: left;
+    padding: 1px;
+    display: none;
+}
+
+#div_coeff_inf{ display:none;}
+
+#div_image_sum{
+    height: 650px;
+    width: 350px;
+    float: left;
+    padding: 1px;
+}
+#div_image_sum_2{
+    height: 300px;
+    width: 350px;
+    float: left;
+    padding: 1px;
+}
+
+#div_fields_1{
+    height: 210px;
+    width: 450px;
+    float: left;
+    padding: 1px;
+}
+
+#div_fields_2{
+    height: 440px;
+    width: 400px;
+    float: left;
+    padding: 1px;
+}
+
+#div_fields_3{
+    height: 320px;
+    width: 400px;
+    float: left;
+    padding: 1px;
+}
+
+#div_fields_4{
+    height: 250px;
+    width: 400px;
+    float: left;
+    padding: 1px;
+}

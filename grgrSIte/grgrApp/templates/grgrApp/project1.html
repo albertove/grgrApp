@@ -1,0 +1,34 @@
+{% extends "grgrApp/base_app.html" %}
+{% block content %}
+<h2>General data</h2>
+{% if form.errors %}
+	<p style="color: black;">
+            Please correct the error{{ form.errors|pluralize }} below:
+    </p>
+	<ul>
+	{% for field in form %}
+		{{ field.errors }}
+	{% endfor %}
+	</ul>
+{% endif %}
+{% if errors %}
+	<p style="color: black;">
+            Please correct the error{{ form.errors|pluralize }} below:
+    </p>
+	{% for error in errors %}
+	<ul>
+		<li>{{ error }}</li>
+	</ul>
+	{% endfor %}
+{% endif %}
+<form action="{% url 'project1' %}" method="POST">
+	{{ form.non_field_errors }}
+	<ul>
+    {% for field in form %}
+		<li>{{ field.label_tag }} {{ field }} {% if field.field.required %}<span class='req'>*</span>{% endif %}</li>
+	{% endfor %}
+	{% csrf_token %}
+    <li><span class='back'><input type="button" class='button' value="<-- Back" /></span><span class='next'><input type="submit" class='button' value="Next -->"  /></span></li>
+    </ul>
+</form>
+{% endblock %}

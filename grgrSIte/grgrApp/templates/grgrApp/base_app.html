@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load staticfiles %}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+
+    // For paramenter form
+    // -------------------------------------------------------------------------
+    $("form input[type='radio']").change(function(){
+        if ($('form input[name=application]:checked')){
+            var radiovalue = $('form input[name=application]:checked').val();
+            for (var i = 1; i < 4; i++){
+                if (radiovalue==i){
+                    $('#img_app' + i).css("border","2px solid #0000ff");
+                }else{
+                    $('#img_app' + i).css("border","0");
+                }
+            }
+        }
+
+        if ($('form input[name=type_of_paving]:checked')){
+            var radiovalue = $('form input[name=type_of_paving]:checked').val();
+
+            if (radiovalue > 0){
+                var radiofield = ['input#id_conv_paving','input#id_conc_paving_joint','input#id_riven_paving'];
+                $('#div_coeff_inf').css('display','block');
+                for (var r=0; r < radiofield.length; r++){
+                    $(radiofield[r]).removeClass('labelshort');
+                    $(radiofield[r]).addClass('disabled');
+                    $(radiofield[r]).prop('disabled',false);
+                }
+                $(radiofield[radiovalue-1]).removeClass('disabled');
+                $(radiofield[radiovalue-1]).addClass('labelshort');
+                $(radiofield[radiovalue-1]).prop('disabled',false);
+
+            }
+            for (var i = 1; i < 4; i++){
+                if (radiovalue == i){
+                    $('#img_type' + i).css("border","2px solid #0000ff");
+                }else{
+                    $('#img_type' + i).css("border","0");
+                }
+            }
+
+        }
+    });
+
+    $("#img_type1").click(function(){
+        var radios = $('input:radio[name=type_of_paving]');
+        radios.filter('[value=1]').prop('checked', true);
+    });
+    $("#img_type2").click(function(){
+        var $radios = $('input:radio[name=type_of_paving]');
+        $radios.filter('[value=2]').prop('checked', true);
+    });
+    $("#img_type3").click(function(){
+        var $radios = $('input:radio[name=type_of_paving]');
+        $radios.filter('[value=3]').prop('checked', true);
+        $('#div_coeff_inf').css('display','block');
+    });
+
+    // For traffic form
+    // -------------------------------------------------------------------------
+
+    // Assign value to thickness base layer depending on traffic category
+    var traffic_value = $('#id_traffic_category').val();
+
+    if (traffic_value == 1){
+        $('#id_thickness_base_layer').val(80);
+    }
+    else if (traffic_value == 2){
+            $('#id_thickness_base_layer').val(80);
+    }
+    else if (traffic_value == 3){
+            $('#id_thickness_base_layer').val(150);
+    }
+    else if (traffic_value == 4){
+            $('#id_thickness_base_layer').val(150);
+    }
+    else if (traffic_value == 5){
+        $('#id_thickness_base_layer').val(150);
+    }
+    else{
+        $('#id_thickness_base_layer').val(0);
+    }
+
+    // Any change in traffic form set fraction subbase laye to 0 and disabled
+    $("#id_traffic_form").change(function(){
+        $("#id_fraction_subbase_layer").val('0');
+        $("#id_fraction_subbase_layer").addClass('disabled');
+    });
+
+
+    $('#id_traffic_category').change(function(){
+
+        var traffic_value = $('#id_traffic_category').val();
+
+        if (traffic_value == 1){
+            $('#id_thickness_base_layer').val(80);
+        }
+        if (traffic_value == 2){
+            $('#id_thickness_base_layer').val(80);
+        }
+        if (traffic_value == 3){
+            $('#id_thickness_base_layer').val(150);
+        }
+        if (traffic_value == 4){
+            $('#id_thickness_base_layer').val(150);
+        }
+        if (traffic_value == 5){
+            $('#id_thickness_base_layer').val(150);
+        }
+    });
+
+    // -------------------------------------------------------------------------
+
+    // For stormwater form
+    // -------------------------------------------------------------------------
+        var const_type = $('#id_construction_type').val();
+
+        var imgsrc = "";
+        var imgditch = "";
+        if (const_type == 0){
+            var imgsrc = " ";
+            var imgditch = " ";
+            var arrayConst = [ '#id_pavement_area', '#id_num_draining_pipes', '#id_depth_draining_pipe','#id_ground_water_level'];
+
+            for (var i = 0; i < arrayConst.length; i++){
+                $(arrayConst[i]).removeClass("labelshort");
+                $(arrayConst[i]).addClass("disabled");
+                $(arrayConst[i]).prop('disabled',true);
+            }
+            $('#div_ditchtype_fields').css('display','none');
+            $('#div_ditchtype').css('display','none');
+            $('#id_imgConstruction').attr('src',imgsrc)
+            $('#id_imgDitchtype').attr('src',imgditch);
+
+        }else{
+            imgsrc = "/static/grgrApp/figures/construction/" + const_type + ".png";
+            imgditch = "/static/grgrApp/figures/ditchtype/" + const_type + ".jpg";
+            var arrayConst = [ '#id_pavement_area', '#id_num_draining_pipes', '#id_depth_draining_pipe','#id_ground_water_level'];
+
+            for (var i = 0; i < arrayConst.length; i++){
+                $(arrayConst[i]).removeClass("disabled");
+                $(arrayConst[i]).addClass("labelshort");
+                $(arrayConst[i]).prop('disabled',false);
+            }
+
+            $('#div_ditchtype').css('display','block');
+            //$('#id_biofilter_type').prop('disabled',false);
+            $('#div_ditchtype_fields').css('display','block');
+            $('#id_imgConstruction').attr('src',imgsrc)
+            $('#id_imgDitchtype').attr('src',imgditch);
+        }
+
+        if (const_type == 1){
+
+            var ditchtypefields = ['#id_height_open_volume','#id_thickness_vegetation_layer','#id_thickness_coarse_sand','#id_thickness_coarse_aggregate_26','#id_thickness_coarse_aggregate_416','#id_depth_draining_pipe_bio'];
+            var defaults = [250,450,100,350,0,0];
+            for (var i=0; i < ditchtypefields.length; i++){
+                if (ditchtypefields[i] == '#id_thickness_coarse_aggregate_416'){
+
+                    $(ditchtypefields[i]).val(0.0);
+                }else{
+                    $(ditchtypefields[i]).removeClass("disabled");
+                    $(ditchtypefields[i]).addClass("labelshort");
+                    $(ditchtypefields[i]).prop('disabled',false);
+                    $(ditchtypefields[i]).val(defaults[i]);
+                }
+            }
+        }
+        if (const_type == 2){
+            var ditchtypefields = ['#id_height_open_volume','#id_thickness_vegetation_layer','#id_thickness_coarse_sand','#id_thickness_coarse_aggregate_26','#id_thickness_coarse_aggregate_416','#id_depth_draining_pipe_bio'];
+            var defaults = [250,1000,100,350,0,0];
+            for (var i=0; i < ditchtypefields.length; i++){
+                if (ditchtypefields[i] == '#id_thickness_coarse_aggregate_416'){
+
+                    $(ditchtypefields[i]).val(0.0);
+                }else{
+                    $(ditchtypefields[i]).removeClass("disabled");
+                    $(ditchtypefields[i]).addClass("labelshort");
+                    $(ditchtypefields[i]).prop('disabled',false);
+                    $(ditchtypefields[i]).val(defaults[i]);
+                }
+            }
+        }
+        if (const_type == 3){
+
+            var ditchtypefields = ['#id_height_open_volume','#id_thickness_vegetation_layer','#id_thickness_coarse_sand','#id_thickness_coarse_aggregate_26','#id_thickness_coarse_aggregate_416','#id_depth_draining_pipe_bio'];
+            var defaults = [400,0,0,0,500,0];
+            for (var i=0; i < ditchtypefields.length; i++){
+                if (ditchtypefields[i] == '#id_thickness_coarse_aggregate_26' || ditchtypefields[i] == '#id_thickness_vegetation_layer' || ditchtypefields[i] == '#id_thickness_coarse_sand'){
+
+                    $(ditchtypefields[i]).val(0.0);
+                }else{
+                    $(ditchtypefields[i]).removeClass("disabled");
+                    $(ditchtypefields[i]).addClass("labelshort");
+                    $(ditchtypefields[i]).prop('disabled',false);
+                    $(ditchtypefields[i]).val(defaults[i]);
+                }
+            }
+
+        }
+        if (const_type == 4){
+
+            var ditchtypefields = ['#id_height_open_volume','#id_thickness_vegetation_layer','#id_thickness_coarse_sand','#id_thickness_coarse_aggregate_26','#id_thickness_coarse_aggregate_416','#id_depth_draining_pipe_bio'];
+            var defaults = [300,450,0,0,0,0];
+            for (var i=0; i < ditchtypefields.length; i++){
+                if (ditchtypefields[i] == '#id_thickness_coarse_aggregate_26' || ditchtypefields[i] == '#id_thickness_coarse_sand' || ditchtypefields[i] == '#id_thickness_coarse_aggregate_416' || ditchtypefields[i] == '#id_depth_draining_pipe_bio'){
+                    $(ditchtypefields[i]).val(0.0);
+                }else{
+                    $(ditchtypefields[i]).removeClass("disabled");
+                    $(ditchtypefields[i]).addClass("labelshort");
+                    $(ditchtypefields[i]).prop('disabled',false);
+                    $(ditchtypefields[i]).val(defaults[i]);
+                }
+            }
+        }
+
+
+    $('#id_construction_type').change(function(){
+        var const_type = $('#id_construction_type').val();
+        var imgsrc = "";
+        var imgditch = "";
+        if (const_type == 0){
+            var imgsrc = " ";
+            var imgditch = " ";
+            var arrayConst = [ '#id_pavement_area', '#id_num_draining_pipes', '#id_depth_draining_pipe','#id_ground_water_level'];
+
+            for (var i = 0; i < arrayConst.length; i++){
+                $(arrayConst[i]).removeClass("labelshort");
+                $(arrayConst[i]).addClass("disabled");
+                $(arrayConst[i]).prop('disabled',true);
+            }
+            $('#div_ditchtype_fields').css('display','none');
+            $('#div_ditchtype').css('display','none');
+            $('#id_imgConstruction').attr('src',imgsrc)
+            $('#id_imgDitchtype').attr('src',imgditch);
+
+        }else{
+            imgsrc = "/static/grgrApp/figures/construction/" + const_type + ".png";
+            imgditch = "/static/grgrApp/figures/ditchtype/" + const_type + ".jpg";
+            var arrayConst = [ '#id_pavement_area', '#id_num_draining_pipes', '#id_depth_draining_pipe','#id_ground_water_level'];
+
+            for (var i = 0; i < arrayConst.length; i++){
+                $(arrayConst[i]).removeClass("disabled");
+                $(arrayConst[i]).addClass("labelshort");
+                $(arrayConst[i]).prop('disabled',false);
+            }
+
+            //$('#div_ditchtype').css('display','block');
+            //$('#id_biofilter_type').prop('disabled',false);
+            //$('#div_ditchtype_fields').css('display','block');
+            $('#id_imgConstruction').attr('src',imgsrc)
+            //$('#id_imgDitchtype').attr('src',imgditch);
+        }
+    });
+
+    $('#id_storm_depth_value').click(function(){
+        var depth = $('#id_depth_draining_pipe_bio').val();
+        if (depth > 0){
+            var r13 = $('#id_height_open_volume').val();
+            var r14 = $('#id_thickness_vegetation_layer').val();
+            var r15 = $('#id_thickness_coarse_sand').val();
+            var r16 = $('#id_thickness_coarse_aggregate_26').val();
+            var r17 = $('#id_thickness_coarse_aggregate_416').val();
+            var r18 = $('#id_thickness_coarse_aggregate_1632').val();
+            var r19 = $('#id_thickness_skeletal_soil').val();
+            var bio = $('#id_construction_type').val();
+            depth = depth*1000;
+            depth = depth - r13 - r16 - r17 - r18 - r19;
+            if (bio == 1 || bio == 2){
+                depth = depth - r14 - r15;
+                depth = depth/1000;
+                $('#id_depth_draining_pipe_bio').val(depth);
+            }
+            if (bio == 3){
+                depth = depth/1000;
+                $('#id_depth_draining_pipe_bio').val(depth);
+            }
+        }
+    });
+
+    $('#id_storm_ground_value').click(function(){
+        var ground = $('#id_ground_water_level').val();
+        var r13 = $('#id_height_open_volume').val();
+        var r14 = $('#id_thickness_vegetation_layer').val();
+        var r15 = $('#id_thickness_coarse_sand').val();
+        var r16 = $('#id_thickness_coarse_aggregate_26').val();
+        var r17 = $('#id_thickness_coarse_aggregate_416').val();
+        var r18 = $('#id_thickness_coarse_aggregate_1632').val();
+        var r19 = $('#id_thickness_skeletal_soil').val();
+        var bio = $('#id_construction_type').val();
+        ground = ground - r13 - r14;
+        if (bio == 1 || bio == 2){
+            ground = ground - r15 - r16 - r17 - r18 - r19;
+            $('#id_ground_water_level_bio').val(ground);
+        }else if (bio == 3){
+            ground = ground + r14 - r16 - r17 - r18 - r19;
+            $('#id_ground_water_level_bio').val(ground);
+        }else{
+            $('#id_ground_water_level_bio').val(ground);
+        }
+    });
+
+
+});
+
+</script>
+<LINK rel="stylesheet" type="text/css" href="/static/grgrApp/style_app.css">
+<title>GRGR Web App</title>
+</head>
+<body>
+	<div id="layout">
+	<div id="header">
+		<h1>GRGR Web App</h1>
+           <p><span style="color:black">User inlogged:</span> {{user.username}}</p>
+	</div>
+	<div id="menu">
+	<ul>
+		<li><a href="{% url 'project' %}">General data</a></li>
+		<li><a href="{% url 'parameter' %}">Application</a></li>
+		<li><a href="{% url 'traffic' %}">Traffic</a></li>
+		<li><a href="{% url 'stormwater' %}">Storm water handling</a></li>
+        <li><a href="{% url 'summary' %}">Summary</a></li>
+	</ul>
+	</div>
+    <br>
+	<div id="content">
+	{% block content %}
+	{% endblock %}
+	</div>
+	</div>
+</body>
+</html>

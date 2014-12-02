@@ -1,0 +1,6 @@
+{% extends "grgrApp/base.html" %}
+{% block content %}
+<h2>Welcome {{user_name}},</h2>
+<p>You have logged in successful</p>
+<p><a href="{% url 'logout' %}">Logout</a></p>
+{% endblock %}
