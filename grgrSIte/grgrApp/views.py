@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect,HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,logout,login
 from grgrSIte.grgrApp.models import RegistrationForm, LoginForm, Project, ProjectParameter, ProjectTraffic,ProjectStormwater,ProjectSummary
@@ -80,8 +80,9 @@ def login_view(request):
                 if u.is_active:
                     login(request,u)
                     request.session['loginuser'] = u.username
-                    context = {'form':ProjectForm}
-                    return render(request,'grgrApp/project.html',context)
+                    # context = {'form':ProjectForm}
+                    return HttpResponseRedirect('/grgrApp/project/')
+                    # return render(request,'grgrApp/project.html',context)
             else:
                 errors.append("The username or first name are wrong. Please try again!")
                 errors.append("Are you already resgistered? If not, please register before login.")
@@ -125,16 +126,21 @@ def project_view(request):
                     prnew = Project(user=user,prname=fprname)
                     form = ProjectForm(request.POST,instance=prnew)
                     form.save()
-                return render(request,'grgrApp/parameter.html',context)
+                return HttpResponseRedirect('/grgrApp/parameter/')
+            else:
+                return render(request, 'grgrApp/project.html',{'errors': errors,'form':form})
         else:
-            form = ProjectForm()
+            try:
+                fprname = request.session['projectname']
+                #print fprname
+                project = Project.objects.get(prname=fprname)
+                form = ProjectForm(instance=project)
+            except:
+                form = ProjectForm()
+            return render(request, 'grgrApp/project.html',{'errors': errors,'form':form,})
     else:
         return render(request,'grgrApp/login.html',{'form':LoginForm})
 
-    return render(request, 'grgrApp/project.html',{
-        'errors': errors,
-        'form':form,
-    })
 
 def parameter_view(request):
     errors = []
@@ -144,15 +150,6 @@ def parameter_view(request):
             form = ParameterForm(request.POST)
             context = {'form':TrafficForm}
             if form.is_valid():
-                #form.save()
-                #form.data = form.data.copy()
-                #type_paving = int(form.cleaned_data['type_of_paving'])
-                #if type_paving == 1:
-                 #   coeff_infiltration = float(form.cleaned_data['conv_paving'])
-                #elif type_paving == 2:
-                 #   coeff_infiltration = float(form.cleaned_data['conv_paving_joint'])
-                #elif type_paving == 3:
-                 #   coeff_infiltration = float(form.cleaned_data['riven_paving'])
                 project = Project.objects.get(prname=request.session['projectname'])
                 try:
                     parameter = ProjectParameter.objects.get(project=project)
@@ -162,15 +159,27 @@ def parameter_view(request):
                     parameternew = ProjectParameter(project=project,application=1,type_of_paving=1,conv_paving=0,conc_paving_joint=0,riven_paving=0)
                     form = ParameterForm(request.POST,instance=parameternew)
                     form.save()
-                return render(request,'grgrApp/traffic.html',context)
+                #return render(request,'grgrApp/traffic.html',context)
+                return HttpResponseRedirect('/grgrApp/traffic/')
+            else:
+                return render(request, 'grgrApp/parameter.html',{'errors': errors,'form':form,})
         else:
+            """
+            try:
+                fprname = request.session['projectname']
+                print fprname
+                project = Project.objects.get(prname=fprname)
+                parameter = ProjectParameter.objects.get(project=project)
+                form = ParameterForm(project=project,application=parameter.application,type_of_paving=parameter.type_of_paving,
+                                    conv_paving=parameter.conv_paving,conc_paving_joint=parameter.conc_paving_joint,riven_paving=parameter.riven_paving)
+            except:
+            """
             form = ParameterForm()
+            #return render(request, 'grgrApp/project.html',{'errors': errors,'form':form,})
+            #form = ParameterForm()
+            return render(request, 'grgrApp/parameter.html',{'errors': errors,'form':form,})
     else:
         return render(request,'grgrApp/login.html',{'form':LoginForm})
-    return render(request, 'grgrApp/parameter.html',{
-        'errors': errors,
-        'form':form,
-    })
 
 def traffic_view(request):
     errors = []
@@ -222,20 +231,24 @@ def traffic_view(request):
                                                     fraction_bedding_layer="2/4",subgrade_material=0,climatic_zone=0,frost_suceptibility_class=0,subbase_material=0)
                         form = TrafficForm(request.POST,instance=trafficnew)
                         form.save()
-                    context = {'form':StormwaterForm}
-                    return render(request,'grgrApp/stormwater.html',context)
+                    #context = {'form':StormwaterForm}
+                    #return render(request,'grgrApp/stormwater.html',context)
+                    return HttpResponseRedirect('/grgrApp/stormwater/')
+            else:
+                return render(request, 'grgrApp/traffic.html',{'errors': errors,'form':form,})
         else:
-                #form.save()
-                #print "Error"
-            form = TrafficForm()
-                #render(request, 'grgrApp/traffic.html',{'errors': errors,'form':form,})
-                #return render(request,'grgrApp/traffic.html',context)
+            try:
+                fprname = request.session['projectname']
+                print fprname
+                projec = Project.objects.get(prname=fprname)
+                traffic = ProjectTraffic.objects.get(project=projec)
+                #print traffic
+                form = TrafficForm(instance=traffic)
+            except:
+                form = TrafficForm()
+            return render(request, 'grgrApp/traffic.html',{'errors': errors,'form':form,})
     else:
         return render(request,'grgrApp/login.html',{'form':LoginForm})
-    return render(request, 'grgrApp/traffic.html',{
-        'errors': errors,
-        'form':form,
-    })
 
 def stormwater_view(request):
     errors = []
@@ -255,11 +268,16 @@ def stormwater_view(request):
                     thickness_bedding_layer = traffic.thickness_bedding_layer
                     thickness_base_layer = traffic.thickness_base_layer
                     thickness_subbase_layer = traffic.thickness_subbase_layer
-                    depth_draining_pipe = depth_draining_pipe - (float(thickness_surface_course) + float(thickness_bedding_layer) + float(thickness_base_layer) + float(thickness_subbase_layer))/1000
+                    rest_depth = float(thickness_surface_course) + float(thickness_bedding_layer) + float(thickness_base_layer) + float(thickness_subbase_layer)
+                    depth_draining_pipe = depth_draining_pipe - rest_depth
+
+                    if depth_draining_pipe > rest_depth:
+                        errors.append(u'The depth may not exceed %d to be located within the the sub base layer. Respecify depth.' % rest_depth)
+                        print errors
                     ground_water_level = ground_water_level - float(thickness_surface_course) - float(thickness_bedding_layer) - float(thickness_base_layer) - float(thickness_subbase_layer)
                     form.data['depth_draining_pipe'] = depth_draining_pipe
-                    context = {'form':form}
-                    return render(request,'grgrApp/stormwater.html',context)
+                    form.data['ground_water_level'] = ground_water_level
+                    return render(request,'grgrApp/stormwater.html',{'errors':errors,'form':form})
                 else:
                     project = Project.objects.get(prname=request.session['projectname'])
                     try:
@@ -270,27 +288,28 @@ def stormwater_view(request):
                         stormwaternew = ProjectStormwater(project=project,construction_type=0)
                         form = StormwaterForm(request.POST,instance=stormwaternew)
                         form.save()
-                    context = {'form':SummaryForm}
-                    return render(request,'grgrApp/summary.html',context)
+                    return HttpResponseRedirect('/grgrApp/summary/')
+                    #context = {'form':SummaryForm}
+                    #summaryform = populate_summaryform(request)
+                    #return render(request,'grgrApp/summary.html',{'form':summaryform})
                 #context = {'form':ProjectForm}
                 #return render(request,'grgrApp/project.html',context)
         else:
             form = StormwaterForm()
+            return render(request, 'grgrApp/stormwater.html',{'errors': errors,'form':form,})
 
     else:
         return render(request,'grgrApp/login.html',{'form':LoginForm})
 
-    return render(request, 'grgrApp/stormwater.html',{
-        'errors': errors,
-        'form':form,
-    })
 
-def summary_form(request):
+def summary_view(request):
     errors = []
+    print "Summary view"
     if request.user.is_authenticated():
         if request.method == 'POST':
-            pass
+            print 1
         else:
+            print 2
             project = Project.objects.get(prname=request.session['projectname'])
             parameter = ProjectParameter.objects.get(project=project)
             traffic = ProjectTraffic.objects.get(project=project)
@@ -318,10 +337,10 @@ def summary_form(request):
             thickness_coarse_sand = stormwater.thickness_coarse_sand #R15
             thickness_coarse_aggregate_26 = stormwater.thickness_coarse_aggregate_26 #R16
             thickness_coarse_aggregate_416 = stormwater.thickness_coarse_aggregate_416 # R17
-            thickness_coarse_aggregate_1632 = stormwater.thickness_coarse_aggregate_1632 #R18
-            thickness_skeletal_soil = stormwater.thickness_skeletal_soil #R19
+            #thickness_coarse_aggregate_1632 = 0 #stormwater.thickness_coarse_aggregate_1632 #R18
+            #thickness_skeletal_soil = 0 #stormwater.thickness_skeletal_soil #R19
             position_draining_pipe_ditch = stormwater.depth_draining_pipe_bio #R21
-            ground_water_level_ditch = stormwater.ground_water_level_bio #R20
+            #ground_water_level_ditch = stormwater.ground_water_level_bio #R20
 
 
             if type_paving == 1:
@@ -330,11 +349,11 @@ def summary_form(request):
                 coeff_infiltration = parameter.conc_paving_joint #D38
             elif type_paving == 3:
                 coeff_infiltration = parameter.riven_paving #D38
-            print pavement_area,type_paving
+            #print pavement_area,type_paving
 
             variables = [pavement_area,type_paving,num_draining_pipe,thick_surf_course,thick_bedding_layer,thick_base_layer,thick_subbase_layer,ground_water,depth_draining,coeff_infiltration,
-                        height_open_volume,thickness_vegetation_layer,thickness_coarse_sand,thickness_coarse_aggregate_26,thickness_coarse_aggregate_416,thickness_coarse_aggregate_1632,
-                        thickness_skeletal_soil,ground_water_level_ditch,position_draining_pipe_ditch,distance_overflow]
+                        height_open_volume,thickness_vegetation_layer,thickness_coarse_sand,thickness_coarse_aggregate_26,thickness_coarse_aggregate_416,position_draining_pipe_ditch,distance_overflow]
+
             DData = calculations.DData(variables)
 
             dict_type_paving = ['Asphalt or concrete paving blocks','Permeable concrete paving blocks','Riven paving']
@@ -366,17 +385,16 @@ def summary_form(request):
                                 sum_position_draining_pipe = depth_draining,sum_ground_water_level = ground_water,
                                 sum_traffic_class = dict_traffic[traffic_class - 1],sum_prepared_subgrade_material = dict_grad_material[subgrade_material - 1],
                                 sum_climatic_zone = dict_climatic_zone[climatic_zone - 1],sum_frost_suceptibility_class = dict_frost_class[frost_class - 1],
-                                sum_design_duration_rain = DData[0],sum_design_intensity_rain = 0,sum_available_volume=DData[1],sum_required_volume = DData[2],
+                                sum_design_duration_rain = DData[0],sum_design_intensity_rain = DData[9],sum_available_volume=DData[1],sum_required_volume = DData[2],
                                 sum_veredict = veredict1, sum_construction_type = dict_const_type[const_type],sum_height_open_volume=height_open_volume,
                                 sum_distance_overflow = distance_overflow,sum_thickness_vegetation_layer=thickness_vegetation_layer, sum_thickness_coarse_sand=thickness_coarse_sand,
                                 sum_thickness_coarse_aggregate_26=thickness_coarse_aggregate_26,sum_thickness_coarse_aggregate_416=thickness_coarse_aggregate_416,
-                                sum_thickness_coarse_aggregate_1632=thickness_coarse_aggregate_1632,sum_thickness_skeletal_soil=thickness_skeletal_soil,
-                                sum_position_draining_pipe_ditch=position_draining_pipe_ditch,sum_ground_water_level_ditch=ground_water_level_ditch,sum_design_duration_rain_ditch=DData[5],
-                                sum_available_volume_ditch=DData[6],sum_required_volume_ditch=DData[7],sum_veredict_ditch = veredict2)
+                                sum_thickness_coarse_aggregate_1632=0,sum_thickness_skeletal_soil=0,
+                                sum_position_draining_pipe_ditch=position_draining_pipe_ditch,sum_ground_water_level_ditch=0,sum_design_duration_rain_ditch=DData[5],
+                                sum_available_volume_ditch=DData[6],sum_required_volume_ditch=DData[7],sum_veredict_ditch = veredict2,sum_design_intensity_rain_ditch = DData[10])
 
             form = SummaryForm(instance=sumarynew)
-
-            #return render(request,'grgrApp/summary.html',{'form':form})
+            return render(request,'grgrApp/summary.html',{'form':form})
     else:
         return render(request,'grgrApp/login.html',{'form':LoginForm})
 
@@ -384,3 +402,90 @@ def summary_form(request):
         'errors': errors,
         'form':form,
     })
+
+def populate_summaryform(request):
+    project = Project.objects.get(prname=request.session['projectname'])
+    parameter = ProjectParameter.objects.get(project=project)
+    traffic = ProjectTraffic.objects.get(project=project)
+    stormwater = ProjectStormwater.objects.get(project=project)
+
+    pavement_area = stormwater.pavement_area #D11
+    type_paving = parameter.type_of_paving #D12
+    num_draining_pipe = stormwater.num_draining_pipes #D13
+    thick_surf_course = traffic.thickness_surface_course #D14
+    thick_bedding_layer = traffic.thickness_bedding_layer #D15
+    thick_base_layer = traffic.thickness_base_layer #D16
+    thick_subbase_layer = traffic.thickness_subbase_layer #D17
+    depth_draining  = stormwater.depth_draining_pipe #D19
+    ground_water = stormwater.ground_water_level #D18
+
+    traffic_class = traffic.traffic_category
+    subgrade_material = traffic.subgrade_material
+    climatic_zone = traffic.climatic_zone
+    frost_class = traffic.frost_suceptibility_class
+
+    const_type = stormwater.construction_type
+    height_open_volume = stormwater.height_open_volume #R13
+    distance_overflow = stormwater.distance_overflow #R22
+    thickness_vegetation_layer = stormwater.thickness_vegetation_layer #R14
+    thickness_coarse_sand = stormwater.thickness_coarse_sand #R15
+    thickness_coarse_aggregate_26 = stormwater.thickness_coarse_aggregate_26 #R16
+    thickness_coarse_aggregate_416 = stormwater.thickness_coarse_aggregate_416 # R17
+    thickness_coarse_aggregate_1632 = 0 #stormwater.thickness_coarse_aggregate_1632 #R18
+    thickness_skeletal_soil = 0 #stormwater.thickness_skeletal_soil #R19
+    position_draining_pipe_ditch = stormwater.depth_draining_pipe_bio #R21
+    ground_water_level_ditch = 0 # stormwater.ground_water_level_bio #R20
+
+
+    if type_paving == 1:
+        coeff_infiltration = parameter.conv_paving #D38
+    elif type_paving == 2:
+        coeff_infiltration = parameter.conc_paving_joint #D38
+    elif type_paving == 3:
+        coeff_infiltration = parameter.riven_paving #D38
+    #print pavement_area,type_paving
+
+    variables = [pavement_area,type_paving,num_draining_pipe,thick_surf_course,thick_bedding_layer,thick_base_layer,thick_subbase_layer,ground_water,depth_draining,coeff_infiltration,
+                height_open_volume,thickness_vegetation_layer,thickness_coarse_sand,thickness_coarse_aggregate_26,thickness_coarse_aggregate_416,position_draining_pipe_ditch,distance_overflow]
+    DData = calculations.DData(variables)
+
+    dict_type_paving = ['Asphalt or concrete paving blocks','Permeable concrete paving blocks','Riven paving']
+    dict_traffic = ['G/C','0 Terrass 1','0 Terrass 2-5','1','2']
+    dict_grad_material = ['Material 1','Material 2','Material 3','Material 4','Material 5']
+    dict_climatic_zone = ['Zone 1','Zone 2','Zone 3','Zone 4','Zone 5']
+    dict_frost_class = ['3','4']
+    dict_base_material = ['Crushed rock','Other than crushed rock']
+    dict_const_type = ['None','Biofilter with plants','Biofilter with tree','Infiltration ditch with macadam','Open ditch']
+
+    if DData[3] == 'nej':
+        if DData[4] == 'ja':
+            veredict1 = "The construction can manage the required storm water volume."
+        elif DData[4] == 'nej':
+            veredict1 = "The construction can manage the required storm water volume and there is no need for the draining pipes."
+    else:
+        veredict1 = "The construction cannot manage the required storm water volume. The number of draining pipes and/or the thickness of the sub base layer needs to be increased."
+    # print thick_subbase_layer
+    if DData[8] == 'ja':
+        veredict2 = "The construction can manage the required storm water volume."
+    elif DData[8] == 'nej':
+        veredict2 = "The construction cannot manage the required storm water volume. The area or the thickness of the layers in the storm water construction need to be increased."
+    else:
+        veredict2 = ""
+
+
+    sumarynew = ProjectSummary(project=project,sum_type_paving=dict_type_paving[type_paving - 1], sum_sub_base_layer = thick_base_layer,
+                        sum_thickness_subbase_layer = thick_subbase_layer - depth_draining,
+                        sum_position_draining_pipe = depth_draining,sum_ground_water_level = ground_water,
+                        sum_traffic_class = dict_traffic[traffic_class - 1],sum_prepared_subgrade_material = dict_grad_material[subgrade_material - 1],
+                        sum_climatic_zone = dict_climatic_zone[climatic_zone - 1],sum_frost_suceptibility_class = dict_frost_class[frost_class - 1],
+                        sum_design_duration_rain = DData[0],sum_design_intensity_rain = DData[9],sum_available_volume=DData[1],sum_required_volume = DData[2],
+                        sum_design_intensity_rain_ditch = DData[10],
+                        sum_veredict = veredict1, sum_construction_type = dict_const_type[const_type],sum_height_open_volume=height_open_volume,
+                        sum_distance_overflow = distance_overflow,sum_thickness_vegetation_layer=thickness_vegetation_layer, sum_thickness_coarse_sand=thickness_coarse_sand,
+                        sum_thickness_coarse_aggregate_26=thickness_coarse_aggregate_26,sum_thickness_coarse_aggregate_416=thickness_coarse_aggregate_416,
+                        sum_thickness_coarse_aggregate_1632=0,sum_thickness_skeletal_soil=0,
+                        sum_position_draining_pipe_ditch=position_draining_pipe_ditch,sum_ground_water_level_ditch=0,sum_design_duration_rain_ditch=DData[5],
+                        sum_available_volume_ditch=DData[6],sum_required_volume_ditch=DData[7],sum_veredict_ditch = veredict2)
+
+    form = SummaryForm(instance=sumarynew)
+    return form

@@ -12,7 +12,7 @@ body{
 
 #header h1{
 	font-family: Rockwell,Arial;
-	font-size: 36px;
+	font-size: 30px;
 	/*text-transform: none;
 	text-decoration: none;*/
 	color: #3A3;
@@ -31,7 +31,7 @@ body{
 #menu li{
 	float: left;
 }
-#menu li a:link{
+#menu li a{
 	display: block;
 	width: 100px;
 	text-align: center;

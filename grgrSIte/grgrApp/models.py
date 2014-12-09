@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django import forms
+from django.core.exceptions import ValidationError
 #from django.utils.safestring import mark_safe
 
 class RegistrationForm(forms.Form):
@@ -174,11 +175,11 @@ class ProjectStormwater(models.Model):
     thickness_coarse_sand = models.IntegerField("Thickness coarse sand")
     thickness_coarse_aggregate_26 = models.IntegerField("Thickness coarse aggregate")
     thickness_coarse_aggregate_416 = models.IntegerField("Thickness coarse aggregate")
-    thickness_coarse_aggregate_1632 = models.IntegerField("Thickness coarse aggregate")
-    thickness_skeletal_soil = models.IntegerField("Thickness skeletal soil")
+    #thickness_coarse_aggregate_1632 = models.IntegerField("Thickness coarse aggregate")
+    #thickness_skeletal_soil = models.IntegerField("Thickness skeletal soil")
     depth_draining_pipe_bio = models.IntegerField("Depth draining pipe")
-    ground_water_level_bio = models.IntegerField("Ground water level")
-    area_stormwater_cons = models.IntegerField("Area storm water construction")
+    # ground_water_level_bio = models.IntegerField("Ground water level")
+    area_stormwater_cons = models.IntegerField("Area storm water construction in relation to permeable surface")
     num_draining_pipes_stormwater = models.IntegerField("Number of draining pipes in storm water construction")
     is_ground_contaminated = models.IntegerField("Is ground contaminated?")
     is_bottom_impermeable = models.IntegerField("Is the bottom of the storm water construction impermeable?")
@@ -187,7 +188,6 @@ class StormwaterForm(forms.ModelForm):
     class Meta:
         model = ProjectStormwater
         exclude = ['project']
-
     def __init__(self,*args,**kwargs):
         BIO_TYPE = (
             ('','-------'),
@@ -242,15 +242,15 @@ class StormwaterForm(forms.ModelForm):
         self.fields['thickness_coarse_aggregate_26'].widget.attrs.update({'class':'disabled','disabled':'true'})
         self.fields['thickness_coarse_aggregate_416'] = forms.FloatField(label="Thickness coarse aggregate 4/16 (h11)",initial=0.0,required=False)
         self.fields['thickness_coarse_aggregate_416'].widget.attrs.update({'class':'labelshort'})
-        self.fields['thickness_coarse_aggregate_1632'] = forms.FloatField(label="Thickness coarse aggregate 16/32 (h12)",initial=0.0,required=False)
-        self.fields['thickness_coarse_aggregate_1632'].widget.attrs.update({'class':'labelshort'})
-        self.fields['thickness_skeletal_soil'] = forms.FloatField(label="Thickness skeletal soil (h13)",initial=0.0,required=False)
-        self.fields['thickness_skeletal_soil'].widget.attrs.update({'class':'labelshort'})
+        # self.fields['thickness_coarse_aggregate_1632'] = forms.FloatField(label="Thickness coarse aggregate 16/32 (h12)",initial=0.0,required=False)
+        # self.fields['thickness_coarse_aggregate_1632'].widget.attrs.update({'class':'labelshort'})
+        # self.fields['thickness_skeletal_soil'] = forms.FloatField(label="Thickness skeletal soil (h13)",initial=0.0,required=False)
+        # self.fields['thickness_skeletal_soil'].widget.attrs.update({'class':'labelshort'})
         self.fields['depth_draining_pipe_bio'] = forms.FloatField(label="Depth draining pipe (h15)",initial=0.0,required=False)
         self.fields['depth_draining_pipe_bio'].widget.attrs.update({'class':'disabled','disabled':'true'})
-        self.fields['ground_water_level_bio'] = forms.FloatField(label="Ground water level (h14)",initial=0.0,required=False)
-        self.fields['ground_water_level_bio'].widget.attrs.update({'class':'labelshort'})
-        self.fields['area_stormwater_cons'] = forms.FloatField(label="Area storm water construction",initial=5.0,required=False)
+        # self.fields['ground_water_level_bio'] = forms.FloatField(label="Ground water level (h14)",initial=0.0,required=False)
+        # self.fields['ground_water_level_bio'].widget.attrs.update({'class':'labelshort'})
+        self.fields['area_stormwater_cons'] = forms.FloatField(label="Area storm water construction in relation to permeable surface",initial=5.0,required=False)
         self.fields['area_stormwater_cons'].widget.attrs.update({'class':'labelshort'})
         self.fields['num_draining_pipes_stormwater'] = forms.FloatField(label="Number of draining pipes in storm water construction",initial=0.0,required=False)
         self.fields['num_draining_pipes_stormwater'].widget.attrs.update({'class':'labelshort'})

@@ -6,6 +6,11 @@
 <script>
 $(document).ready(function(){
 
+    $("[href]").each(function() {
+    if (this.href == window.location.href) {
+        $(this).addClass("active");
+        }
+    });
     // For paramenter form
     // -------------------------------------------------------------------------
     $("form input[type='radio']").change(function(){
@@ -25,15 +30,18 @@ $(document).ready(function(){
 
             if (radiovalue > 0){
                 var radiofield = ['input#id_conv_paving','input#id_conc_paving_joint','input#id_riven_paving'];
+                var radioli = ['li#id_conv_paving','li#id_conc_paving_joint','li#id_riven_paving'];
                 $('#div_coeff_inf').css('display','block');
                 for (var r=0; r < radiofield.length; r++){
                     $(radiofield[r]).removeClass('labelshort');
                     $(radiofield[r]).addClass('disabled');
                     $(radiofield[r]).prop('disabled',false);
+                    $(radioli[r]).hide();
                 }
                 $(radiofield[radiovalue-1]).removeClass('disabled');
                 $(radiofield[radiovalue-1]).addClass('labelshort');
                 $(radiofield[radiovalue-1]).prop('disabled',false);
+                $(radioli[radiovalue-1]).show();
 
             }
             for (var i = 1; i < 4; i++){
@@ -266,8 +274,8 @@ $(document).ready(function(){
             var r15 = $('#id_thickness_coarse_sand').val();
             var r16 = $('#id_thickness_coarse_aggregate_26').val();
             var r17 = $('#id_thickness_coarse_aggregate_416').val();
-            var r18 = $('#id_thickness_coarse_aggregate_1632').val();
-            var r19 = $('#id_thickness_skeletal_soil').val();
+            // var r18 = $('#id_thickness_coarse_aggregate_1632').val();
+            //var r19 = $('#id_thickness_skeletal_soil').val();
             var bio = $('#id_construction_type').val();
             depth = depth*1000;
             depth = depth - r13 - r16 - r17 - r18 - r19;
@@ -290,8 +298,8 @@ $(document).ready(function(){
         var r15 = $('#id_thickness_coarse_sand').val();
         var r16 = $('#id_thickness_coarse_aggregate_26').val();
         var r17 = $('#id_thickness_coarse_aggregate_416').val();
-        var r18 = $('#id_thickness_coarse_aggregate_1632').val();
-        var r19 = $('#id_thickness_skeletal_soil').val();
+        // var r18 = $('#id_thickness_coarse_aggregate_1632').val();
+        // var r19 = $('#id_thickness_skeletal_soil').val();
         var bio = $('#id_construction_type').val();
         ground = ground - r13 - r14;
         if (bio == 1 || bio == 2){
@@ -315,8 +323,9 @@ $(document).ready(function(){
 <body>
 	<div id="layout">
 	<div id="header">
-		<h1>GRGR Web App</h1>
+		<h1>Grey green surfaces in sustainable cities design tool</h1>
            <p><span style="color:black">User inlogged:</span> {{user.username}}</p>
+           <p><a href="{% url 'logout' %}">logout</a></p>
 	</div>
 	<div id="menu">
 	<ul>

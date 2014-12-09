@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url
 from grgrSIte.grgrApp import views
 
 urlpatterns = patterns('',
-    url(r"^summary/$",views.summary_form,name='summary'),
+    url(r"^summary/$",views.summary_view,name='summary'),
     url(r"^stormwater/$",views.stormwater_view,name='stormwater'),
     url(r"^traffic/$",views.traffic_view,name='traffic'),
     url(r"^parameter/$",views.parameter_view,name='parameter'),

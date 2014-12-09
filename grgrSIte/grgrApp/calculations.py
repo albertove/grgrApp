@@ -66,6 +66,8 @@ def DData(variables):
             w_sheet.write(37,3,variables[k])
         elif k>9:
             w_sheet.write(2+k,17,variables[k])
+        elif k>14:
+            w_sheet.write(4+k,17,variables[k])
         else:
             w_sheet.write(10+k,3,variables[k])
 
@@ -75,14 +77,20 @@ def DData(variables):
     design_duration_rain = r_sheet.cell(105,3).value #D106
     available_volume = r_sheet.cell(107,3).value #D108
     required_volume = r_sheet.cell(106,3).value #D107
+    for k in range(65,95):
+        if r_sheet.cell(k,1).value == design_duration_rain:
+            design_intensity_rain = r_sheet.cell(k,2).value
     D101 = r_sheet.cell(100,3).value
     D109 = r_sheet.cell(108,3).value
     design_duration_rain_ditch = r_sheet.cell(104,17).value #R105
     available_volume_ditch = r_sheet.cell(109,17).value #R110
     required_volume_ditch = r_sheet.cell(98,17).value #R99
+    for k in range(65,95):
+        if r_sheet.cell(k,15).value == design_duration_rain:
+            design_intensity_rain_ditch = r_sheet.cell(k,17).value
     R102 = r_sheet.cell(101,17).value
 
-    DRespons = [design_duration_rain,available_volume,required_volume,D101,D109,design_duration_rain_ditch,available_volume_ditch,required_volume_ditch,R102]
+    DRespons = [design_duration_rain,available_volume,required_volume,D101,D109,design_duration_rain_ditch,available_volume_ditch,required_volume_ditch,R102,design_intensity_rain,design_intensity_rain_ditch]
     #print DRespons
     return DRespons
 
