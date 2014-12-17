@@ -11,11 +11,12 @@
         </div>
         <div id="div_fields">
             <h3>Pavement</h3>
-            <p>Fill in the fields below and then click in Update value to calculate depth draining pipe and ground water level fields.</p>
             {% if errors %}
-            {% for err in errors %}
-            <p><span class='req'>{{err}}</span></p>
-            {%endfor%}
+                {% for err in errors %}
+                    <p><span class='req'>{{err}}</span></p>
+                {%endfor%}
+            {% else %}
+                <p>Fill in the fields below and then click in Update value to calculate depth draining pipe and ground water level fields.</p>
             {%endif%}
             <li style="font: normal 11px Tahoma">{{ form.pavement_area.label_tag}}{{ form.pavement_area }}[m<sup>2</sup>]</li>
             <li style="font: normal 11px Tahoma">{{ form.num_draining_pipes.label_tag }}{{ form.num_draining_pipes }}</li>

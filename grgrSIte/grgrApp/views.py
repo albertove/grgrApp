@@ -198,7 +198,7 @@ def traffic_view(request):
                 # print fraction_sub_layer
                 if (thickness_sub_layer == 0) or (thickness_sub_layer == None) or (fraction_sub_layer == 0) or (fraction_sub_layer == None):
                     #print form.changed_data()
-                    print 1
+                    # print 1
                     # Data from form
                     traffic_category = form.data.get('traffic_category')
                     subgrade_material = form.data.get('subgrade_material')
@@ -239,7 +239,7 @@ def traffic_view(request):
         else:
             try:
                 fprname = request.session['projectname']
-                print fprname
+                # print fprname
                 projec = Project.objects.get(prname=fprname)
                 traffic = ProjectTraffic.objects.get(project=projec)
                 #print traffic
@@ -269,12 +269,18 @@ def stormwater_view(request):
                     thickness_base_layer = traffic.thickness_base_layer
                     thickness_subbase_layer = traffic.thickness_subbase_layer
                     rest_depth = float(thickness_surface_course) + float(thickness_bedding_layer) + float(thickness_base_layer) + float(thickness_subbase_layer)
-                    depth_draining_pipe = depth_draining_pipe - rest_depth
 
                     if depth_draining_pipe > rest_depth:
                         errors.append(u'The depth may not exceed %d to be located within the the sub base layer. Respecify depth.' % rest_depth)
-                        print errors
-                    ground_water_level = ground_water_level - float(thickness_surface_course) - float(thickness_bedding_layer) - float(thickness_base_layer) - float(thickness_subbase_layer)
+                        depth_draining_pipe = 0
+                    else:
+                        depth_draining_pipe = depth_draining_pipe
+
+                    #if ground_water_level > rest_depth:
+                    #    errors.append(u'The ground water level may not exceed %d to be located within the the sub base layer. Respecify ground water level.' % rest_depth)
+                    #    ground_water_level = 0
+                    #else:
+                    ground_water_level = ground_water_level
                     form.data['depth_draining_pipe'] = depth_draining_pipe
                     form.data['ground_water_level'] = ground_water_level
                     return render(request,'grgrApp/stormwater.html',{'errors':errors,'form':form})
@@ -304,12 +310,13 @@ def stormwater_view(request):
 
 def summary_view(request):
     errors = []
-    print "Summary view"
+    # print "Summary view"
     if request.user.is_authenticated():
         if request.method == 'POST':
-            print 1
+            # print 1
+            return HttpResponseRedirect('/grgrApp/project/')
         else:
-            print 2
+            # print 2
             project = Project.objects.get(prname=request.session['projectname'])
             parameter = ProjectParameter.objects.get(project=project)
             traffic = ProjectTraffic.objects.get(project=project)
@@ -322,8 +329,8 @@ def summary_view(request):
             thick_bedding_layer = traffic.thickness_bedding_layer #D15
             thick_base_layer = traffic.thickness_base_layer #D16
             thick_subbase_layer = traffic.thickness_subbase_layer #D17
-            depth_draining  = stormwater.depth_draining_pipe #D19
-            ground_water = stormwater.ground_water_level #D18
+            depth_draining  = thick_surf_course + thick_bedding_layer +  thick_base_layer + thick_subbase_layer - stormwater.depth_draining_pipe #D19
+            ground_water = stormwater.ground_water_level - (thick_surf_course + thick_bedding_layer +  thick_base_layer + thick_subbase_layer) #D18
 
             traffic_class = traffic.traffic_category
             subgrade_material = traffic.subgrade_material
@@ -416,8 +423,9 @@ def populate_summaryform(request):
     thick_bedding_layer = traffic.thickness_bedding_layer #D15
     thick_base_layer = traffic.thickness_base_layer #D16
     thick_subbase_layer = traffic.thickness_subbase_layer #D17
-    depth_draining  = stormwater.depth_draining_pipe #D19
-    ground_water = stormwater.ground_water_level #D18
+    #depth_draining  = stormwater.depth_draining_pipe #D19
+    depth_draining  = thick_surf_course + thick_bedding_layer +  thick_base_layer + thick_subbase_layer - stormwater.depth_draining_pipe #D19
+    ground_water = stormwater.ground_water_level - (thick_surf_course + thick_bedding_layer +  thick_base_layer + thick_subbase_layer) #D18
 
     traffic_class = traffic.traffic_category
     subgrade_material = traffic.subgrade_material

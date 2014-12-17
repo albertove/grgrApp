@@ -202,8 +202,8 @@ tr{margin-left:auto; margin-right:auto;}
 div.img a:hover img{border:2px solid #0000ff;}
 input.disabled{background-color: #dddddd; width: 120px; padding: 2px 0 2px 0;}
 input.summary{background-color: #FFF; color: #000; width: 120px; padding: 2px 0 2px 0; border: none;}
-input#id_sum_type_paving{width: 150px;}
-input#id_sum_construction_type{width: 150px; font: bold 13px Tahoma;}
+input#id_sum_type_paving{width: 170px;}
+input#id_sum_construction_type{width: 200px; font: bold 13px Tahoma;}
 
 
 textarea#id_sum_veredict{border: 0; width:350px; height: 70px; font: bold 13px Tahoma;}
