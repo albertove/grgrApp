@@ -259,40 +259,40 @@ class StormwaterForm(forms.ModelForm):
 
 class ProjectSummary(models.Model):
     project = models.ForeignKey(Project)
-    sum_type_paving = models.CharField("Type of paving (h1)",max_length=32)
-    sum_bedding_layer = models.CharField("Bedding layer (h2)",max_length=4,default="2/4")
-    sum_unbound_base_layer = models.CharField("Unbound base layer (h3)",max_length=4,default="0/32")
-    sum_sub_base_layer = models.IntegerField("Sub base layer (h4)")
-    sum_thickness_subbase_layer = models.IntegerField("Thickness in sub base layer available for storm water detention (h4a)")
-    sum_position_draining_pipe = models.IntegerField("Position draining pipe (h4b)")
-    sum_ground_water_level = models.IntegerField("Distance to ground water level (h5)")
+    sum_type_paving = models.CharField("Surface course",max_length=32) #h1
+    sum_bedding_layer = models.CharField("Bedding layer",max_length=32,default="2/4") #h2
+    sum_unbound_base_layer = models.CharField("Unbound base layer",max_length=32,default="0/32") #h3
+    sum_sub_base_layer = models.CharField("Sub base layer",max_length=32) #h4
+    sum_thickness_subbase_layer = models.CharField("Thickness in sub base layer available for storm water detention",max_length=32) #h4a
+    sum_position_draining_pipe = models.CharField("Position draining pipe",max_length=32) #h4b
+    sum_ground_water_level = models.CharField("Distance to ground water level",max_length=32) #h5
 
-    sum_traffic_class = models.CharField("Traffic class",max_length=10)
-    sum_prepared_subgrade_material = models.CharField("Prepared subgrade material",max_length=30)
-    sum_climatic_zone = models.CharField("Climatic zone",max_length=30)
-    sum_frost_suceptibility_class = models.CharField("Frost suceptibility class",max_length=30)
-    sum_design_duration_rain = models.IntegerField("Design duration rain fall")
-    sum_design_intensity_rain = models.IntegerField("Design intensity rain fall")
-    sum_available_volume = models.IntegerField("Available volume for storm water retention")
-    sum_required_volume = models.IntegerField("Required volume for storm water retention")
+    sum_traffic_class = models.CharField("Traffic class",max_length=32)
+    sum_prepared_subgrade_material = models.CharField("Prepared subgrade material",max_length=32)
+    sum_climatic_zone = models.CharField("Climatic zone",max_length=32)
+    sum_frost_suceptibility_class = models.CharField("Frost suceptibility class",max_length=32)
+    sum_design_duration_rain = models.CharField("Design duration rain fall",max_length=32)
+    sum_design_intensity_rain = models.CharField("Design intensity rain fall",max_length=32)
+    sum_available_volume = models.CharField("Available volume for storm water retention",max_length=32)
+    sum_required_volume = models.CharField("Required volume for storm water retention",max_length=32)
     sum_veredict = models.TextField("Veredict 1")
 
     sum_construction_type = models.CharField("Construction type",max_length=120)
-    sum_height_open_volume = models.IntegerField("Height open volume (h7)")
-    sum_distance_overflow = models.IntegerField("Distance to overflow gully (h7b)")
-    sum_thickness_vegetation_layer = models.IntegerField("Thickness vegetation layer (h8)")
-    sum_thickness_coarse_sand = models.IntegerField("Thickness coarse sand (h9)")
-    sum_thickness_coarse_aggregate_26 = models.IntegerField("Thickness coarse aggregate 2/6 (h10)")
-    sum_thickness_coarse_aggregate_416 =  models.IntegerField("Thickness coarse aggregate 4/16 (h11)")
-    sum_thickness_coarse_aggregate_1632 =  models.IntegerField("Thickness coarse aggregate 16/32 (h12)")
-    sum_thickness_skeletal_soil = models.IntegerField("Thickness skeletal soil (h13)")
-    sum_position_draining_pipe_ditch = models.IntegerField("Position draining pipe (h15)")
-    sum_ground_water_level_ditch = models.IntegerField("Distance to ground water level (h14)")
+    sum_height_open_volume = models.CharField("Height open volume",max_length=32) #h7
+    sum_distance_overflow = models.CharField("Distance to overflow gully",max_length=32) #h7b
+    sum_thickness_vegetation_layer = models.CharField("Thickness vegetation layer",max_length=32) #h8
+    sum_thickness_coarse_sand = models.CharField("Thickness coarse sand",max_length=32) #h9
+    sum_thickness_coarse_aggregate_26 = models.CharField("Thickness coarse aggregate 2/6",max_length=32) #h10
+    sum_thickness_coarse_aggregate_416 =  models.CharField("Thickness coarse aggregate 4/16",max_length=32) #h11
+    #sum_thickness_coarse_aggregate_1632 =  models.IntegerField("Thickness coarse aggregate 16/32 (h12)")
+    sum_thickness_skeletal_soil = models.CharField("Thickness skeletal soil",max_length=32) #h13
+    sum_position_draining_pipe_ditch = models.CharField("Position draining pipe (ditch)",max_length=32) #h14
+    sum_ground_water_level_ditch = models.CharField("Distance to ground water level (ditch)",max_length=32)
 
-    sum_design_duration_rain_ditch = models.IntegerField("Design duration rain fall (ditch)")
-    sum_design_intensity_rain_ditch = models.IntegerField("Design intensity rain fall (ditch)")
-    sum_available_volume_ditch = models.IntegerField("Available volume for storm water retention (ditch)")
-    sum_required_volume_ditch = models.IntegerField("Required volume for storm water retention (ditch)")
+    sum_design_duration_rain_ditch = models.CharField("Design duration rain fall (ditch)",max_length=32)
+    sum_design_intensity_rain_ditch = models.CharField("Design intensity rain fall (ditch)",max_length=32)
+    sum_available_volume_ditch = models.CharField("Available volume for storm water retention (ditch)",max_length=32)
+    sum_required_volume_ditch = models.CharField("Required volume for storm water retention (ditch)",max_length=32)
     sum_veredict_ditch = models.TextField("Veredict 2")
 
 class SummaryForm(forms.ModelForm):
@@ -302,63 +302,63 @@ class SummaryForm(forms.ModelForm):
 
     def __init__(self,*args,**kwargs):
         super(SummaryForm,self).__init__(*args,**kwargs)
-        self.fields['sum_type_paving'] = forms.CharField(label="Type of paving (h1)",max_length=32,required=False)
-        self.fields['sum_type_paving'].widget.attrs.update({'class':'summary'})
+        #self.fields['sum_type_paving'] = forms.CharField(label="Surface course",max_length=32,required=False)
+        self.fields['sum_type_paving'].widget.attrs.update({'class':'summary_surface'})
         self.fields['sum_bedding_layer'].widget.attrs.update({'class':'summary'})
         self.fields['sum_unbound_base_layer'].widget.attrs.update({'class':'summary'})
         self.fields['sum_type_paving'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_sub_base_layer'] = forms.FloatField(label="Sub base layer (h4)",required=False)
+        #self.fields['sum_sub_base_layer'] = forms.CharField(label="Sub base layer (h4)",required=False)
         self.fields['sum_sub_base_layer'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_thickness_subbase_layer'] = forms.FloatField(label="Thickness in sub base layer available for storm water detention (h4a)",required=False)
+        #self.fields['sum_thickness_subbase_layer'] = forms.FloatField(label="Thickness in sub base layer available for storm water detention (h4a)",required=False)
         self.fields['sum_thickness_subbase_layer'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_position_draining_pipe'] = forms.FloatField(label="Position draining pipe (h4b)",required=False)
+        #self.fields['sum_position_draining_pipe'] = forms.FloatField(label="Position draining pipe (h4b)",required=False)
         self.fields['sum_position_draining_pipe'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_ground_water_level'] = forms.FloatField(label="Distance to ground water level (h5)",required=False)
+        #self.fields['sum_ground_water_level'] = forms.FloatField(label="Distance to ground water level (h5)",required=False)
         self.fields['sum_ground_water_level'].widget.attrs.update({'class':'summary'})
 
         self.fields['sum_traffic_class'].widget.attrs.update({'class':'summary'})
         self.fields['sum_prepared_subgrade_material'].widget.attrs.update({'class':'summary'})
         self.fields['sum_climatic_zone'].widget.attrs.update({'class':'summary'})
         self.fields['sum_frost_suceptibility_class'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_design_duration_rain'] = forms.FloatField(label="Design duration rain fall",required=False)
+        #self.fields['sum_design_duration_rain'] = forms.FloatField(label="Design duration rain fall",required=False)
         self.fields['sum_design_duration_rain'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_design_intensity_rain'] = forms.FloatField(label="Design intensity rain fall",required=False)
+        #self.fields['sum_design_intensity_rain'] = forms.FloatField(label="Design intensity rain fall",required=False)
         self.fields['sum_design_intensity_rain'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_available_volume'] = forms.FloatField(label="Available volume for storm water retention",required=False)
+        #self.fields['sum_available_volume'] = forms.FloatField(label="Available volume for storm water retention",required=False)
         self.fields['sum_available_volume'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_required_volume'] = forms.FloatField(label="Required volume for storm water retention",required=False)
+        #self.fields['sum_required_volume'] = forms.FloatField(label="Required volume for storm water retention",required=False)
         self.fields['sum_required_volume'].widget.attrs.update({'class':'summary'})
         #self.fields['sum_veredict'].widget.attrs.update({'class':'labelshort'})
 
         self.fields['sum_construction_type'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_height_open_volume'] = forms.FloatField(label="Height open volume (h7)",required=False)
+        #self.fields['sum_height_open_volume'] = forms.FloatField(label="Height open volume (h7)",required=False)
         self.fields['sum_height_open_volume'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_distance_overflow'] = forms.FloatField(label="Distance to overflow gully (h7b)",required=False)
+        #self.fields['sum_distance_overflow'] = forms.FloatField(label="Distance to overflow gully (h7b)",required=False)
         self.fields['sum_distance_overflow'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_thickness_vegetation_layer'] = forms.FloatField(label="Thickness vegetation layer (h8)",required=False)
+        #self.fields['sum_thickness_vegetation_layer'] = forms.FloatField(label="Thickness vegetation layer (h8)",required=False)
         self.fields['sum_thickness_vegetation_layer'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_thickness_coarse_sand'] = forms.FloatField(label="Thickness coarse sand (h9)",required=False)
+        #self.fields['sum_thickness_coarse_sand'] = forms.FloatField(label="Thickness coarse sand (h9)",required=False)
         self.fields['sum_thickness_coarse_sand'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_thickness_coarse_aggregate_26'] = forms.FloatField(label="Thickness coarse aggregate 2/6 (h10)",required=False)
+        #self.fields['sum_thickness_coarse_aggregate_26'] = forms.FloatField(label="Thickness coarse aggregate 2/6 (h10)",required=False)
         self.fields['sum_thickness_coarse_aggregate_26'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_thickness_coarse_aggregate_416'] = forms.FloatField(label="Thickness coarse aggregate 4/16 (h11)",required=False)
+        #self.fields['sum_thickness_coarse_aggregate_416'] = forms.FloatField(label="Thickness coarse aggregate 4/16 (h11)",required=False)
         self.fields['sum_thickness_coarse_aggregate_416'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_thickness_coarse_aggregate_1632'] = forms.FloatField(label="Thickness coarse aggregate 16/32 (h12)",required=False)
-        self.fields['sum_thickness_coarse_aggregate_1632'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_thickness_skeletal_soil'] = forms.FloatField(label="Thickness skeletal soil (h13)",required=False)
+        #self.fields['sum_thickness_coarse_aggregate_1632'] = forms.FloatField(label="Thickness coarse aggregate 16/32 (h12)",required=False)
+        #self.fields['sum_thickness_coarse_aggregate_1632'].widget.attrs.update({'class':'summary'})
+        #self.fields['sum_thickness_skeletal_soil'] = forms.FloatField(label="Thickness skeletal soil (h13)",required=False)
         self.fields['sum_thickness_skeletal_soil'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_position_draining_pipe_ditch'] = forms.FloatField(label="Position draining pipe (h15)",required=False)
+        #self.fields['sum_position_draining_pipe_ditch'] = forms.FloatField(label="Position draining pipe (h15)",required=False)
         self.fields['sum_position_draining_pipe_ditch'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_ground_water_level_ditch'] = forms.FloatField(label="Distance to ground water level (h14)",required=False)
+        #self.fields['sum_ground_water_level_ditch'] = forms.FloatField(label="Distance to ground water level (h14)",required=False)
         self.fields['sum_ground_water_level_ditch'].widget.attrs.update({'class':'summary'})
 
-        self.fields['sum_design_duration_rain_ditch'] = forms.FloatField(label="Design duration rain fall (ditch)",required=False)
+        #self.fields['sum_design_duration_rain_ditch'] = forms.FloatField(label="Design duration rain fall (ditch)",required=False)
         self.fields['sum_design_duration_rain_ditch'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_design_intensity_rain_ditch'] = forms.FloatField(label="Design intensity rain fall (ditch)",required=False)
+        #self.fields['sum_design_intensity_rain_ditch'] = forms.FloatField(label="Design intensity rain fall (ditch)",required=False)
         self.fields['sum_design_intensity_rain_ditch'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_available_volume_ditch'] = forms.FloatField(label="Available volume for storm water retention (ditch)",required=False)
+        #self.fields['sum_available_volume_ditch'] = forms.FloatField(label="Available volume for storm water retention (ditch)",required=False)
         self.fields['sum_available_volume_ditch'].widget.attrs.update({'class':'summary'})
-        self.fields['sum_required_volume_ditch'] = forms.FloatField(label="Required volume for storm water retention (ditch)",required=False)
+        #self.fields['sum_required_volume_ditch'] = forms.FloatField(label="Required volume for storm water retention (ditch)",required=False)
         self.fields['sum_required_volume_ditch'].widget.attrs.update({'class':'summary'})
 
 """
