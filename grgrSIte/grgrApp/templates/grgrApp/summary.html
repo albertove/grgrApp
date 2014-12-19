@@ -11,7 +11,7 @@
         </div>
         <div id="div_fields_1">
             {% for field in form %}
-                {% if field.label == 'Type of paving (h1)' or field.label == 'Bedding layer (h2)' or field.label == 'Unbound base layer (h3)' or field.label == 'Sub base layer (h4)' or field.label == 'Thickness in sub base layer available for storm water detention (h4a)' or field.label == 'Position draining pipe (h4b)' or field.label == 'Distance to ground water level (h5)' %}
+                {% if field.label == 'Surface course' or field.label == 'Bedding layer' or field.label == 'Unbound base layer' or field.label == 'Sub base layer' or field.label == 'Thickness in sub base layer available for storm water detention' or field.label == 'Position draining pipe' or field.label == 'Distance to ground water level' %}
                     <li>{{field.label_tag}} {{field}}</li>
                 {% endif %}
             {% endfor %}
@@ -31,25 +31,25 @@
             <h3>Summary storm water construction</h3>
             {% if form.sum_construction_type.value == "Biofilter with plants" %}
                 <li>{{form.sum_construction_type}}</li>
-                <img id="id_imgConsttype" class="imagesum" src="/static/grgrApp/figures/construction/1.png" />
+                <img id="id_imgConsttype" class="imageDitch" src="/static/grgrApp/figures/ditchtype/1.jpg" />
             {% endif %}
             {% if form.sum_construction_type.value == "Biofilter with tree" %}
                 <li>{{form.sum_construction_type}}</li>
-                <img id="id_imgConsttype" class="imagesum" src="/static/grgrApp/figures/construction/1.png" />
+                <img id="id_imgConsttype" class="imageDitch" src="/static/grgrApp/figures/ditchtype/2.jpg" />
             {% endif %}
             {% if form.sum_construction_type.value == "Infiltration ditch with macadar" %}
                 <li>{{form.sum_construction_type}}</li>
-                <img id="id_imgConsttype" class="imagesum" src="/static/grgrApp/figures/construction/2.png" />
+                <img id="id_imgConsttype" class="imageDitch" src="/static/grgrApp/figures/ditchtype/3.jpg" />
             {% endif %}
             {% if form.sum_construction_type.value == "Open ditch" %}
                 <li>{{form.sum_construction_type}}</li>
-                <img id="id_imgConsttype" class="imagesum" src="/static/grgrApp/figures/construction/3.png" />
+                <img id="id_imgConsttype" class="imageDitch" src="/static/grgrApp/figures/ditchtype/4.jpg" />
             {% endif %}
         </div>
         <div id="div_fields_3">
             <br><br>
             {% for field in form %}
-                {% if field.label == 'Height open volume (h7)' or field.label == 'Distance to overflow gully (h7b)' or field.label == 'Thickness vegetation layer (h8)' or field.label == 'Thickness coarse sand (h9)' or field.label == 'Thickness coarse aggregate 2/6 (h10)' or field.label == 'Thickness coarse aggregate 4/16 (h11)' or field.label == 'Thickness coarse aggregate 16/32 (h12)' or field.label == 'Thickness skeletal soil (h13)' or field.label == 'Depth draining pipe (h15)' or field.label == 'Ground water level (h14)' %}
+                {% if field.label == 'Height open volume' or field.label == 'Distance to overflow gully' or field.label == 'Thickness vegetation layer' or field.label == 'Thickness coarse sand' or field.label == 'Thickness coarse aggregate 2/6' or field.label == 'Thickness coarse aggregate 4/16' or field.label == 'Thickness coarse aggregate 16/32' or field.label == 'Thickness skeletal soil' or field.label == 'Depth draining pipe (ditch)' or field.label == 'Ground water level (ditch)' %}
                     <li>{{field.label_tag}}{{field}}</li>
                 {% endif %}
             {% endfor %}
