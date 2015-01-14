@@ -352,13 +352,13 @@ def summary_view(request):
             depth_draining  = thick_surf_course + thick_bedding_layer +  thick_base_layer + thick_subbase_layer - stormwater.depth_draining_pipe #D19
             ground_water = stormwater.ground_water_level - (thick_surf_course + thick_bedding_layer +  thick_base_layer + thick_subbase_layer) #D18
 
-            str_type_paving = "%s, h1 = %3.2f [mm]"%(dict_type_paving[type_paving - 1],thick_base_layer)
-            str_bedding_layer = "2/4, h2 = %3.2f [mm]"%thick_bedding_layer
-            str_unbound_base_layer = "0/32, h3 = %3.2f [mm]"%thick_surf_course
-            str_subbase_layer = "h4 = %3.2f [mm]"%(thick_subbase_layer)
-            str_thick_subbase_layer = "h4a = %3.2f [mm]"%(thick_subbase_layer - depth_draining)
-            str_depth_draining_pipe = "h4b = %3.2f [mm]"%(depth_draining)
-            str_distance_ground = "h5 = %3.2f [mm]"%ground_water
+            str_type_paving = "%s, h1 = %3.1f [mm]"%(dict_type_paving[type_paving - 1],thick_base_layer)
+            str_bedding_layer = "2/4, h2 = %3.1f [mm]"%thick_bedding_layer
+            str_unbound_base_layer = "0/32, h3 = %3.1f [mm]"%thick_surf_course
+            str_subbase_layer = "h4 = %3.1f [mm]"%(thick_subbase_layer)
+            str_thick_subbase_layer = "h4a = %3.1f [mm]"%(thick_subbase_layer - depth_draining)
+            str_depth_draining_pipe = "h4b = %3.1f [mm]"%(depth_draining)
+            str_distance_ground = "h5 = %3.1f [mm]"%ground_water
 
             traffic_class = traffic.traffic_category
             subgrade_material = traffic.subgrade_material
@@ -393,7 +393,7 @@ def summary_view(request):
             str_desing_duration_rain = "%3d [min]"%DData[0]
             str_design_intensity_rain = "%3d [l/s/ha]"%DData[9]
             str_available_volume = "%3d"%DData[1]
-            str_required_volume = "%3d"%DData[2]
+            str_required_volume = "%3.1f"%DData[2]
 
             str_height_open_volume = "h7 = %3d [mm]"%height_open_volume
             str_dist_overflow = "h7b = %3d [mm]"%distance_overflow
