@@ -38,7 +38,7 @@
     <li id="coeff" class=""><label class="labeltitle">Coefficient of infiltration</label></li>
     {% for field in form %}
         {% if field.label != 'Application' and field.label != 'Type of paving' %}
-            <li id="{{field.id_for_label}}" class=""> {{ field.label_tag }}{{ field }}</li>
+            <li id="{{field.id_for_label}}" class=""> {{ field.label_tag }}{{ field }} [%]</li>
         {% endif %}
     {% endfor %}
     {% csrf_token %}

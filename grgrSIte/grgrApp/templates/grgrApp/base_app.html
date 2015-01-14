@@ -13,6 +13,48 @@ $(document).ready(function(){
     });
     // For paramenter form
     // -------------------------------------------------------------------------
+
+    var application = "{{form.application.value}}";
+    // alert(application);
+    switch(application){
+        case "1":
+            $('#app_radio1').prop('checked','checked');
+            break;
+        case "2":
+            $('#app_radio2').prop('checked','checked');
+            break;
+        case "3":
+            $('#app_radio3').prop('checked','checked');
+            break;
+    }
+    var paving = "{{form.type_of_paving.value}}";
+    switch(paving){
+        case "1":
+            $('#type_radio1').prop('checked','checked');
+            break;
+        case "2":
+            $('#type_radio2').prop('checked','checked');
+            break;
+        case "3":
+            $('#type_radio3').prop('checked','checked');
+            break;
+    }
+
+    if (paving > 0){
+        var radiofield = ['input#id_conv_paving','input#id_conc_paving_joint','input#id_riven_paving'];
+        var radioli = ['li#id_conv_paving','li#id_conc_paving_joint','li#id_riven_paving'];
+        $('#div_coeff_inf').css('display','block');
+        for (var r=0; r < radiofield.length; r++){
+            $(radiofield[r]).removeClass('labelshort');
+            $(radiofield[r]).addClass('disabled');
+            $(radiofield[r]).prop('disabled',false);
+            $(radioli[r]).hide();
+        }
+        $(radiofield[paving-1]).removeClass('disabled');
+        $(radiofield[paving-1]).addClass('labelshort');
+        $(radiofield[paving-1]).prop('disabled',false);
+        $(radioli[paving-1]).show();
+    }
     $("form input[type='radio']").change(function(){
         if ($('form input[name=application]:checked')){
             var radiovalue = $('form input[name=application]:checked').val();
@@ -95,10 +137,11 @@ $(document).ready(function(){
     }
 
     // Any change in traffic form set fraction subbase laye to 0 and disabled
-    $("#id_traffic_form").change(function(){
-        $("#id_fraction_subbase_layer").val('0');
-        $("#id_fraction_subbase_layer").addClass('disabled');
-    });
+    //$("#id_traffic_form").change(function(){
+        //var thick_subbase_layer = $('#id_thickness_subbase_layer').val();
+        //$("#id_fraction_subbase_layer").val('0');
+        //$("#id_fraction_subbase_layer").addClass('disabled');
+    //});
 
 
     $('#id_traffic_category').change(function(){
@@ -166,13 +209,19 @@ $(document).ready(function(){
        if (const_type == 1){
 
             var ditchtypefields = ['#id_height_open_volume','#id_thickness_vegetation_layer','#id_thickness_coarse_sand','#id_thickness_coarse_aggregate_26','#id_thickness_coarse_aggregate_416','#id_depth_draining_pipe_bio'];
-            var ditchtypeli = ['li#id_height_open_volume','li#id_thickness_vegetation_layer','li#id_thickness_coarse_sand','li#id_thickness_coarse_aggregate_26','#id_thickness_coarse_aggregate_416','#id_depth_draining_pipe_bio'];
-            var defaults = [250,450,100,350,0,0];
+            var ditchtypeli = ['li#id_height_open_volume_li','li#id_thickness_vegetation_layer_li','li#id_thickness_coarse_sand_li','li#id_thickness_coarse_aggregate_26_li','li#id_thickness_coarse_aggregate_416_li','li#id_depth_draining_pipe_bio_li'];
+            var tdepth = $('#id_depth_draining_pipe_bio').val();
+            if (tdepth > 0){
+                var defaults = [250,450,100,350,0,tdepth];
+            }else{
+                var defaults = [250,450,100,350,0,0];
+            }
             for (var i=0; i < ditchtypefields.length; i++){
                 if (ditchtypefields[i] == '#id_thickness_coarse_aggregate_416'){
                     // $(ditchtypeli[i]).hide();
                     $(ditchtypefields[i]).val(0.0);
-                    $(ditchtypefields[i]).prop('disabled',false);
+                    //$(ditchtypefields[i]).prop('disabled',false);
+                    $(ditchtypeli[i]).hide();
                 }else{
                     $(ditchtypefields[i]).removeClass("disabled");
                     $(ditchtypefields[i]).addClass("labelshort");
@@ -183,13 +232,19 @@ $(document).ready(function(){
         }
         if (const_type == 2){
             var ditchtypefields = ['#id_height_open_volume','#id_thickness_vegetation_layer','#id_thickness_coarse_sand','#id_thickness_coarse_aggregate_26','#id_thickness_coarse_aggregate_416','#id_depth_draining_pipe_bio'];
-            var ditchtypeli = ['li#id_height_open_volume','li#id_thickness_vegetation_layer','li#id_thickness_coarse_sand','li#id_thickness_coarse_aggregate_26','#id_thickness_coarse_aggregate_416','#id_depth_draining_pipe_bio'];
-            var defaults = [250,1000,100,350,0,0];
+            var ditchtypeli = ['li#id_height_open_volume_li','li#id_thickness_vegetation_layer_li','li#id_thickness_coarse_sand_li','li#id_thickness_coarse_aggregate_26_li','li#id_thickness_coarse_aggregate_416_li','li#id_depth_draining_pipe_bio_li'];
+            var tdepth = $('#id_depth_draining_pipe_bio').val();
+            if (tdepth > 0){
+                var defaults = [250,450,100,350,0,tdepth];
+            }else{
+                var defaults = [250,450,100,350,0,0];
+            }
             for (var i=0; i < ditchtypefields.length; i++){
                 if (ditchtypefields[i] == '#id_thickness_coarse_aggregate_416'){
                     // $(ditchtypeli[i]).hide();
                     $(ditchtypefields[i]).val(0.0);
-                    $(ditchtypefields[i]).prop('disabled',false);
+                    //$(ditchtypefields[i]).prop('disabled',false);
+                    $(ditchtypeli[i]).hide();
                 }else{
                     $(ditchtypefields[i]).removeClass("disabled");
                     $(ditchtypefields[i]).addClass("labelshort");
@@ -201,13 +256,19 @@ $(document).ready(function(){
         if (const_type == 3){
 
             var ditchtypefields = ['#id_height_open_volume','#id_thickness_vegetation_layer','#id_thickness_coarse_sand','#id_thickness_coarse_aggregate_26','#id_thickness_coarse_aggregate_416','#id_depth_draining_pipe_bio'];
-            var ditchtypeli = ['li#id_height_open_volume','li#id_thickness_vegetation_layer','li#id_thickness_coarse_sand','li#id_thickness_coarse_aggregate_26','#id_thickness_coarse_aggregate_416','#id_depth_draining_pipe_bio'];
-            var defaults = [400,0,0,0,500,0];
+            var ditchtypeli = ['li#id_height_open_volume_li','li#id_thickness_vegetation_layer_li','li#id_thickness_coarse_sand_li','li#id_thickness_coarse_aggregate_26_li','li#id_thickness_coarse_aggregate_416_li','li#id_depth_draining_pipe_bio_li'];
+            var tdepth = $('#id_depth_draining_pipe_bio').val();
+            if (tdepth > 0){
+                var defaults = [250,450,100,350,0,tdepth];
+            }else{
+                var defaults = [250,450,100,350,0,0];
+            }
             for (var i=0; i < ditchtypefields.length; i++){
                 if (ditchtypefields[i] == '#id_thickness_coarse_aggregate_26' || ditchtypefields[i] == '#id_thickness_vegetation_layer' || ditchtypefields[i] == '#id_thickness_coarse_sand'){
                     // $(ditchtypeli[i]).hide();
                     $(ditchtypefields[i]).val(0.0);
-                    $(ditchtypefields[i]).prop('disabled',false);
+                    // $(ditchtypefields[i]).prop('disabled',false);
+                    $(ditchtypeli[i]).hide();
                 }else{
                     $(ditchtypefields[i]).removeClass("disabled");
                     $(ditchtypefields[i]).addClass("labelshort");
@@ -220,13 +281,14 @@ $(document).ready(function(){
         if (const_type == 4){
 
             var ditchtypefields = ['#id_height_open_volume','#id_thickness_vegetation_layer','#id_thickness_coarse_sand','#id_thickness_coarse_aggregate_26','#id_thickness_coarse_aggregate_416','#id_depth_draining_pipe_bio'];
-            var ditchtypeli = ['li#id_height_open_volume','li#id_thickness_vegetation_layer','li#id_thickness_coarse_sand','li#id_thickness_coarse_aggregate_26','#id_thickness_coarse_aggregate_416','#id_depth_draining_pipe_bio'];
+            var ditchtypeli = ['li#id_height_open_volume_li','li#id_thickness_vegetation_layer_li','li#id_thickness_coarse_sand_li','li#id_thickness_coarse_aggregate_26_li','li#id_thickness_coarse_aggregate_416_li','li#id_depth_draining_pipe_bio_li'];
             var defaults = [300,450,0,0,0,0];
             for (var i=0; i < ditchtypefields.length; i++){
                 if (ditchtypefields[i] == '#id_thickness_coarse_aggregate_26' || ditchtypefields[i] == '#id_thickness_coarse_sand' || ditchtypefields[i] == '#id_thickness_coarse_aggregate_416' || ditchtypefields[i] == '#id_depth_draining_pipe_bio'){
                     // $(ditchtypeli[i]).hide();
                     $(ditchtypefields[i]).val(0.0);
-                    $(ditchtypefields[i]).prop('disabled',false);
+                    // $(ditchtypefields[i]).prop('disabled',false);
+                    $(ditchtypeli[i]).hide();
                 }else{
                     $(ditchtypefields[i]).removeClass("disabled");
                     $(ditchtypefields[i]).addClass("labelshort");
