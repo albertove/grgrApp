@@ -214,7 +214,7 @@ class StormwaterForm(forms.ModelForm):
             (2,"No"),
         )
         super(StormwaterForm,self).__init__(*args,**kwargs)
-        self.fields['pavement_area'] = forms.FloatField(label="Pavement area",initial=0.0,required=False)
+        self.fields['pavement_area'] = forms.FloatField(label="Pavement area",initial=0.0,required=False,max_value=10000,error_messages={'invalid':'The value must be less than 10 000.'})
         self.fields['pavement_area'].widget.attrs.update({'class':'disabled','disabled':'True'})
         #self.fields['permeable_surface'] = forms.IntegerField(min_value=0,max_value=10000,initial=0.0)
         #self.fields['permeable_surface'].widget.attrs.update({'class':'disabled','disabled':'True'})
