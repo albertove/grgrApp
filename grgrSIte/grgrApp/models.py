@@ -104,8 +104,8 @@ class TrafficForm(forms.ModelForm):
         TRAFFIC = (
             ('','----------'),
             (1,'G/C'),
-            (2,'0 Terrass 1'),
-            (3,'0 Terrass 2-5'),
+            (2,'0 Sub-grade material 1'),
+            (3,'0 Sub-grade material 2-5'),
             (4,'1'),
             (5,'2'),
         )
@@ -151,7 +151,7 @@ class TrafficForm(forms.ModelForm):
         self.fields['frost_suceptibility_class'] = forms.ChoiceField(label="Frost suceptibility class",choices=FROST_CLASS)
         self.fields['subbase_material'] = forms.ChoiceField(label="Sub-base material",choices=BASE_MATERIAL)
         self.fields['thickness_subbase_layer'] = forms.FloatField("Thickness subbase layer",initial=0.0,required=False)
-        self.fields['thickness_subbase_layer'].widget.attrs.update({'class':'disabled'})
+        self.fields['thickness_subbase_layer'].widget.attrs.update({'class':'labelshort'})
         self.fields['fraction_subbase_layer'] = forms.CharField(label="Fraction subbase layer",max_length=4,required=False)
         self.fields['fraction_subbase_layer'].widget.attrs.update({'class':'disabled'})
 
@@ -231,15 +231,15 @@ class StormwaterForm(forms.ModelForm):
         #self.fields['biofilter_type'].widget.attrs.update({'disabled':'True'})
 
         self.fields['height_open_volume'] = forms.FloatField(label="Height open volume (h7)",initial=0.0,required=False)
-        self.fields['height_open_volume'].widget.attrs.update({'class':'disabled','disabled':'true'})
+        self.fields['height_open_volume'].widget.attrs.update({'class':'labelshort','disabled':'false'})
         self.fields['distance_overflow'] = forms.FloatField(label="Distance to overflow gully (h7b)",initial=0.0,required=False)
         self.fields['distance_overflow'].widget.attrs.update({'class':'labelshort'})
         self.fields['thickness_vegetation_layer'] = forms.FloatField(label="Thickness vegetation layer (h8)",initial=0.0,required=False)
-        self.fields['thickness_vegetation_layer'].widget.attrs.update({'class':'disabled','disabled':'true'})
+        self.fields['thickness_vegetation_layer'].widget.attrs.update({'class':'labelshort','disabled':'false'})
         self.fields['thickness_coarse_sand'] = forms.FloatField(label="Thickness coarse sand (h9)",initial=0.0,required=False)
-        self.fields['thickness_coarse_sand'].widget.attrs.update({'class':'disabled','disabled':'true'})
+        self.fields['thickness_coarse_sand'].widget.attrs.update({'class':'labelshort','disabled':'false'})
         self.fields['thickness_coarse_aggregate_26'] = forms.FloatField(label="Thickness coarse aggregate 2/6 (h10)",initial=0.0,required=False)
-        self.fields['thickness_coarse_aggregate_26'].widget.attrs.update({'class':'disabled','disabled':'true'})
+        self.fields['thickness_coarse_aggregate_26'].widget.attrs.update({'class':'labelshort','disabled':'false'})
         self.fields['thickness_coarse_aggregate_416'] = forms.FloatField(label="Thickness coarse aggregate 4/16 (h11)",initial=0.0,required=False)
         self.fields['thickness_coarse_aggregate_416'].widget.attrs.update({'class':'labelshort'})
         # self.fields['thickness_coarse_aggregate_1632'] = forms.FloatField(label="Thickness coarse aggregate 16/32 (h12)",initial=0.0,required=False)
@@ -247,10 +247,10 @@ class StormwaterForm(forms.ModelForm):
         # self.fields['thickness_skeletal_soil'] = forms.FloatField(label="Thickness skeletal soil (h13)",initial=0.0,required=False)
         # self.fields['thickness_skeletal_soil'].widget.attrs.update({'class':'labelshort'})
         self.fields['depth_draining_pipe_bio'] = forms.FloatField(label="Depth draining pipe (h15)",initial=0.0,required=False)
-        self.fields['depth_draining_pipe_bio'].widget.attrs.update({'class':'disabled','disabled':'true'})
+        self.fields['depth_draining_pipe_bio'].widget.attrs.update({'class':'labelshort','disabled':'false'})
         # self.fields['ground_water_level_bio'] = forms.FloatField(label="Ground water level (h14)",initial=0.0,required=False)
         # self.fields['ground_water_level_bio'].widget.attrs.update({'class':'labelshort'})
-        self.fields['area_stormwater_cons'] = forms.FloatField(label="Area storm water construction in relation to permeable surface",initial=5.0,required=False)
+        self.fields['area_stormwater_cons'] = forms.FloatField(label="Area storm water construction in relation to permeable surface",initial=2.5,required=False)
         self.fields['area_stormwater_cons'].widget.attrs.update({'class':'labelshort'})
         self.fields['num_draining_pipes_stormwater'] = forms.FloatField(label="Number of draining pipes in storm water construction",initial=0.0,required=False)
         self.fields['num_draining_pipes_stormwater'].widget.attrs.update({'class':'labelshort'})
