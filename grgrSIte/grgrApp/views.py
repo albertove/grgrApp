@@ -353,7 +353,6 @@ def summary_view(request):
             depth_draining  = thick_surf_course + thick_bedding_layer +  thick_base_layer + thick_subbase_layer - stormwater.depth_draining_pipe #D19
             ground_water = stormwater.ground_water_level - (thick_surf_course + thick_bedding_layer +  thick_base_layer + thick_subbase_layer) #D18
 
-<<<<<<< HEAD
             str_type_paving = "%s, h1 = %3.1f [mm]"%(dict_type_paving[type_paving - 1],thick_base_layer)
             str_bedding_layer = "2/4, h2 = %3.1f [mm]"%thick_bedding_layer
             str_unbound_base_layer = "0/32, h3 = %3.1f [mm]"%thick_surf_course
@@ -361,21 +360,16 @@ def summary_view(request):
             str_thick_subbase_layer = "h4a = %3.1f [mm]"%(thick_subbase_layer - depth_draining)
             str_depth_draining_pipe = "h4b = %3.1f [mm]"%(depth_draining)
             str_distance_ground = "h5 = %3.1f [mm]"%ground_water
-=======
-<<<<<<< HEAD
             str_type_paving = "%s, h1 = %3.2f [mm]"%(dict_type_paving[type_paving - 1],thick_surf_course)
             str_bedding_layer = "2/4, h2 = %3.2f [mm]"%thick_bedding_layer
             str_unbound_base_layer = "0/32, h3 = %3.2f [mm]"%thick_base_layer
-=======
             str_type_paving = "%s, h1 = %3.2f [mm]"%(dict_type_paving[type_paving - 1],thick_base_layer)
             str_bedding_layer = "2/4, h2 = %3.2f [mm]"%thick_bedding_layer
             str_unbound_base_layer = "0/32, h3 = %3.2f [mm]"%thick_surf_course
->>>>>>> origin/master
             str_subbase_layer = "h4 = %3.2f [mm]"%(thick_subbase_layer)
             str_thick_subbase_layer = "h4a = %3.2f [mm]"%(thick_subbase_layer - depth_draining)
             str_depth_draining_pipe = "h4b = %3.2f [mm]"%(depth_draining)
             str_distance_ground = "h5 = %3.2f [mm]"%ground_water
->>>>>>> 8f9ecf39477f67e696f820709d21e48e94260bfb
 
             traffic_class = traffic.traffic_category
             subgrade_material = traffic.subgrade_material
@@ -419,13 +413,8 @@ def summary_view(request):
             str_thick_aggr_26 = "h10 = %3d [mm]"%thickness_coarse_aggregate_26
             str_thick_aggr_416 = "h11 = %3d [mm]"%thickness_coarse_aggregate_416
             str_thick_skeletal_soil = "h13 = 0 [mm]"
-<<<<<<< HEAD
             str_pos_draining_pipe = "h15 = %3d [mm]"%position_draining_pipe_ditch
             str_ground_water_level = "h14 = 0 [mm]"
-=======
-            str_pos_draining_pipe = "h14 = %3d [mm]"%position_draining_pipe_ditch
-            str_ground_water_level = "0 [mm]"
->>>>>>> origin/master
             str_design_duration_rain_ditch = "%3d [min]"%DData[5]
             str_design_intensity_rain_ditch = "%3d [l/s/ha]"%DData[10]
             str_available_volume_ditch = "%3d [l]"%DData[6]
