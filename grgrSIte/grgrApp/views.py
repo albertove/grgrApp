@@ -310,7 +310,7 @@ def stormwater_view(request):
                 projec = Project.objects.get(prname=fprname)
                 stormwater = ProjectStormwater.objects.get(project=projec)
                 #print 2
-                print stormwater.construction_type
+                #print stormwater.construction_type
                 form = StormwaterForm(instance=stormwater)
             except:
                 form = StormwaterForm()
@@ -353,6 +353,7 @@ def summary_view(request):
             depth_draining  = thick_surf_course + thick_bedding_layer +  thick_base_layer + thick_subbase_layer - stormwater.depth_draining_pipe #D19
             ground_water = stormwater.ground_water_level - (thick_surf_course + thick_bedding_layer +  thick_base_layer + thick_subbase_layer) #D18
 
+<<<<<<< HEAD
             str_type_paving = "%s, h1 = %3.1f [mm]"%(dict_type_paving[type_paving - 1],thick_base_layer)
             str_bedding_layer = "2/4, h2 = %3.1f [mm]"%thick_bedding_layer
             str_unbound_base_layer = "0/32, h3 = %3.1f [mm]"%thick_surf_course
@@ -367,6 +368,12 @@ def summary_view(request):
             str_bedding_layer = "2/4, h2 = %3.2f [mm]"%thick_bedding_layer
             str_unbound_base_layer = "0/32, h3 = %3.2f [mm]"%thick_surf_course
             str_subbase_layer = "h4 = %3.2f [mm]"%(thick_subbase_layer)
+=======
+            str_type_paving = "%s, h1 = %3.2f [mm]"%(dict_type_paving[type_paving - 1],thick_subbase_layer)
+            str_bedding_layer = "2/4, h2 = %3.2f [mm]"%thick_bedding_layer
+            str_unbound_base_layer = "0/32, h3 = %3.2f [mm]"%thick_base_layer
+            str_subbase_layer = "h4 = %3.2f [mm]"%(thick_surf_course)
+>>>>>>> 284deb752043710d67825599e492913f25fdbf98
             str_thick_subbase_layer = "h4a = %3.2f [mm]"%(thick_subbase_layer - depth_draining)
             str_depth_draining_pipe = "h4b = %3.2f [mm]"%(depth_draining)
             str_distance_ground = "h5 = %3.2f [mm]"%ground_water
@@ -419,7 +426,7 @@ def summary_view(request):
             str_design_intensity_rain_ditch = "%3d [l/s/ha]"%DData[10]
             str_available_volume_ditch = "%3d [l]"%DData[6]
             str_required_volume_ditch = "%3d [l]"%DData[7]
-            print DData[10]
+            #print DData[10]
 
             if DData[3] == 'nej':
                 if DData[4] == 'ja':
