@@ -43,7 +43,7 @@
         </div>
     {% csrf_token %}
     <ul>
-        <li><span class='back'><a href="{% url 'traffic' %}"><input type="button" class='button' value="<-- Back" /></a></span><span class='next'><input type="submit" class='button' value="Next -->"  /></span></li>
+        <li><a href="{% url 'traffic' %}"><input type="button" class='button' value="<-- Back" onclick="window.location = '../traffic/';" /> <input type="submit" class='button' value="Next -->"  /></li>
     </ul>
 </form>
 {% endblock %}

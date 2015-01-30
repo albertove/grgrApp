@@ -377,7 +377,11 @@ def summary_view(request):
             #thickness_skeletal_soil = 0 #stormwater.thickness_skeletal_soil #R19
             position_draining_pipe_ditch = stormwater.depth_draining_pipe_bio #R21
             #ground_water_level_ditch = stormwater.ground_water_level_bio #R20
-
+            R11 = stormwater.area_stormwater_cons
+            R12 = stormwater.num_draining_pipes_stormwater
+            R23 = stormwater.is_ground_contaminated
+            R39 = stormwater.is_bottom_impermeable
+            R21 = stormwater.depth_draining_pipe_bio
 
             if type_paving == 1:
                 coeff_infiltration = parameter.conv_paving #D38
@@ -388,9 +392,9 @@ def summary_view(request):
             #print pavement_area,type_paving
 
             variables = [pavement_area,type_paving,num_draining_pipe,thick_surf_course,thick_bedding_layer,thick_base_layer,thick_subbase_layer,ground_water,depth_draining,coeff_infiltration,
-                        height_open_volume,thickness_vegetation_layer,thickness_coarse_sand,thickness_coarse_aggregate_26,thickness_coarse_aggregate_416,position_draining_pipe_ditch,distance_overflow]
+                        height_open_volume,thickness_vegetation_layer,thickness_coarse_sand,thickness_coarse_aggregate_26,thickness_coarse_aggregate_416,position_draining_pipe_ditch,distance_overflow,R11,R12,R23,R39,R21]
 
-            DData = calculations.DData(variables)
+            DData = calculations.PyDData(variables)
             str_desing_duration_rain = "%3d [min]"%DData[0]
             str_design_intensity_rain = "%3d [l/s/ha]"%DData[9]
             str_available_volume = "%3d"%DData[1]
