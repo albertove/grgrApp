@@ -49,10 +49,6 @@
         <div id="div_fields_3">
             <br><br>
             {% for field in form %}
-<<<<<<< HEAD
-
-=======
->>>>>>> 284deb752043710d67825599e492913f25fdbf98
                 {% if field.label == 'Height open volume' or field.label == 'Distance to overflow gully' or field.label == 'Thickness vegetation layer' or field.label == 'Thickness coarse sand' or field.label == 'Thickness coarse aggregate 2/6' or field.label == 'Thickness coarse aggregate 4/16' or field.label == 'Thickness coarse aggregate 16/32' or field.label == 'Thickness skeletal soil' or field.label == 'Position draining pipe (ditch)' or field.label == 'Distance to ground water level (ditch)' %}
                     <li>{{field.label_tag}}{{field}}</li>
                 {% endif %}
