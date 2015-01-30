@@ -89,15 +89,16 @@ body{
 
 #content a{
 	text-decoration: none;
-	color: #AA3;
+    font: bold 11px Tahoma;
+	color: #AAA;
 }
 #content a:hover {
-    color: #33e;
+    color: #33E;
 	text-decoration: none;
 }
 
 #content a:link{
-    color: #aa3;
+    color: #33E;
 	text-decoration: none;
 }
 
@@ -192,6 +193,11 @@ tr{margin-left:auto; margin-right:auto;}
 
 .button:hover{ color: #33E; background: #FFF;}
 
+#button_back{
+    margin-left: 210px;
+    cursor: pointer;
+}
+
 .image{ width: 140px; display: block; margin-left:auto; margin-right:auto; }
 .imagepar{ width: 140px; display: block; margin-left:auto; margin-right:auto; }
 .imagestorm{ width: 280px; float:left; padding-left: 10px;}
@@ -213,27 +219,27 @@ textarea#id_sum_veredict_ditch{border: 0; width:350px; height: 70px; font: bold 
 #button_traffic{color: #E33;}
 #div_image{
     height: 300px;
-    width: 350px;
+    width: 30%;
     float: left;
     padding: 1px;
 }
 
 #div_fields{
     height: 300px;
-    width: 400px;
+    width: 60%;
     float: left;
     padding: 1px;
 }
 
 #div_ditchtype{
-    width: 350px;
+    width: 30%;
     float: left;
     padding: 1px;
     display: none;
 }
 
 #div_ditchtype_fields{
-    width: 450px;
+    width: 60%;
     float: left;
     padding: 1px;
     display: none;
@@ -243,41 +249,41 @@ textarea#id_sum_veredict_ditch{border: 0; width:350px; height: 70px; font: bold 
 
 #div_image_sum{
     height: 550px;
-    width: 350px;
+    width: 30%;
     float: left;
     padding: 1px;
 }
 #div_image_sum_2{
     height: 450px;
-    width: 350px;
+    width: 30%;
     float: left;
     padding: 1px;
 }
 
 #div_fields_1{
     height: 230px;
-    width: 450px;
+    width: 60%;
     float: left;
     padding: 1px;
 }
 
 #div_fields_2{
-    height: 340px;
-    width: 400px;
+
+    width: 60%;
     float: left;
     padding: 1px;
 }
 
 #div_fields_3{
-    height: 300px;
-    width: 400px;
+
+    width: 60%;
     float: left;
     padding: 1px;
 }
 
 #div_fields_4{
-    height: 210px;
-    width: 400px;
+
+    width: 60%;
     float: left;
     padding: 1px;
 }
