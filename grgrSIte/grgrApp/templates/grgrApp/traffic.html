@@ -3,18 +3,24 @@
 <h2>Traffic</h2>
 <form action="{% url 'traffic' %}" method="POST" id="id_traffic_form">
     {{ form.non_field_errors }}
-    <table style="width:75%">
+    <table style="width:80%">
         {% for field in form %}
         <tr>
+            {% if field.errors %}
+            <td>
+                {{ field.label_tag }} <span class="styled-select">{{ field }}</span> {% if field.field.required %}<span class='req'>* This field is requiered</span>{% endif %}
+                {% if field.label == 'Thickness surface course' %}<span>[mm]</span><span class='req'>* This field is requiered</span>{% endif %}
+                {% if field.label == 'Thickness bedding layer' %}<span>[mm]</span><span class='req'>* This field is requiered</span>{% endif %}
+                {% if field.label == 'Thickness subbase layer' %}<span>[mm]</span><span class='req'>* This field is requiered</span>{% endif %}
+                {% if field.label == 'Thickness base layer' %}<span>[mm]</span><span class='req'>* This field is requiered</span>{% endif %}
+            </td>
+            {% else %}
             <td>
                 {{ field.label_tag }} <span class="styled-select">{{ field }}</span> {% if field.field.required %}<span class='req'>*</span>{% endif %}
                 {% if field.label == 'Thickness surface course' %}<span>[mm]</span>{% endif %}
-                {% if field.label == 'Thickness bedding layer' %}<span>[mm]</span>{% endif %}
-                {% if field.label == 'Thickness subbase layer' %}<span>[mm]</span>{% endif %}
-                {% if field.label == 'Thickness base layer' %}<span>[mm]</span>{% endif %}
-            {% if form.errors %}
-            <td>
-            <span class='req'>This field is requiered</span>
+                {% if field.label == 'Thickness bedding layer' %}<span>[mm] </span>{% endif %}
+                {% if field.label == 'Thickness subbase layer' %}<span>[mm] </span><span id="span_thick_value_change" class='req'></span>{% endif %}
+                {% if field.label == 'Thickness base layer' %}<span>[mm] </span>{% endif %}
             </td>
             {% endif %}
         </tr>

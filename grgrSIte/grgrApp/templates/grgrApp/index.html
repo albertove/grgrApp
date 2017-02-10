@@ -1,7 +1,27 @@
 {% extends "grgrApp/base.html" %}
 {% block content %}
-<h2>{{web_app}}</h2>
-<p>This place is under construction. New functions will be added soon...</p>
+<h2>Welcome!</h2>
+<p>This web based design tool has been developed within the Vinnova financed project <a href="http://www.greenurbansystems.eu/sv/Sidor/default.aspx" target="_blank">Green Urban Systems project</a>.</p>
+<p>This tool is used for simultaneous design of applications and storm water solutions taking traffic loads and rain fall into account. The tool needs to be completed
+ and expanded before it can be used for designing real applications. You are welcomed to register and evaluate this version. Comments on errors, missing functions,
+ information to be added and others can be sent to:
+</p>
+
+<div id="div_fig">
+<a href="http://www.sp.se" target="_blank"><img id="id_imgSP" class="imageSP" src="/static/grgrApp/figures/SP_Science_Partner.gif"/></a>
+</div>
+
+<div id="div_persinfo">
+<p>
+<span style="font:bold 11px Tahoma">J&ouml;rgen Larsson, MSc</span><br>
+<span style="font:normal 11px Tahoma">SP Technical Research Institute of Sweden<br>
+Structural and Solid Mechanics<br>
+E-mail: jorgen.larsson[at]sp.se<br>
+Tel: +46(0)10 516 50 00, (direct) +46 (0)10 516 56 94</span>
+</p>
+</div>
+<div id="div_newuser">
 <p>Are you a new user? <a href="{% url 'registration' %}">Registration</a><p>
-<p><a href="{% url 'users' %}">Registered users</a></p>
+<!--<p><a href="{% url 'users' %}">Registered users</a></p>-->
+</div>
 {% endblock %}

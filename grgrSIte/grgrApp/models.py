@@ -68,8 +68,10 @@ class ParameterForm(forms.ModelForm):
         )
         super(ParameterForm,self).__init__(*args,**kwargs)
         self.fields['application'] = forms.ChoiceField(choices=APPLICATION,widget=forms.RadioSelect)
+        self.fields['application'].widget.attrs.update({'class':'radio'})
         self.fields['type_of_paving'] = forms.ChoiceField(label="Type of paving", choices=TYPE_PAVING,widget=forms.RadioSelect)
-        self.fields['conv_paving'] = forms.FloatField(label="Conventional paving",initial=2.5,min_value=0,max_value=5,required=False)
+        self.fields['type_of_paving'].widget.attrs.update({'class':'radio'})
+        self.fields['conv_paving'] = forms.DecimalField(label="Conventional paving",initial=2.5,min_value=0,max_value=5,required=False)
         self.fields['conv_paving'].widget.attrs.update({'class':'labelshort'})
         self.fields['conc_paving_joint'] = forms.FloatField(label="Concrete paving blocks with openings/with widened joint",initial=20,min_value=20,max_value=30,required=False)
         self.fields['conc_paving_joint'].widget.attrs.update({'class':'labelshort'})
@@ -110,7 +112,7 @@ class TrafficForm(forms.ModelForm):
             (5,'2'),
         )
         GRAD_MATERIAL = (
-            (' ','----------'),
+            ('','----------'),
             (1,'Material 1'),
             (2,'Material 2'),
             (3,'Material 3'),
@@ -196,11 +198,11 @@ class StormwaterForm(forms.ModelForm):
         )
         CONS_TYPE = (
             ('','-------'),
-            (0,'None'),
-            (1,'Biofilter with plants'),
-            (2,'Biofilter with tree'),
-            (3,'Infiltration ditch with macadam'),
-            (4,'Open ditch'),
+            (1,'None'),
+            (2,'Biofilter with plants'),
+            (3,'Biofilter with tree'),
+            (4,'Infiltration ditch with macadam'),
+            (5,'Open ditch'),
         )
         DITCH_TYPE = (
             (1,"Biofilter"),
@@ -225,7 +227,7 @@ class StormwaterForm(forms.ModelForm):
         self.fields['ground_water_level'] = forms.FloatField(label="Ground water level",initial=0.0,required=False,help_text="Please write a value and then clic in Update value")
         self.fields['ground_water_level'].widget.attrs.update({'class':'disabled','disabled':'True'})
 
-        self.fields['construction_type'] = forms.ChoiceField(label="Construction type",choices=CONS_TYPE,required=True)
+        self.fields['construction_type'] = forms.ChoiceField(label="Construction type",choices=CONS_TYPE)
         #self.fields['ditch_type'] = forms.ChoiceField(label="Ditch type",choices=DITCH_TYPE)
         #self.fields['biofilter_type'] = forms.ChoiceField(label="Biofilter type",choices=BIO_TYPE)
         #self.fields['biofilter_type'].widget.attrs.update({'disabled':'True'})
@@ -250,7 +252,7 @@ class StormwaterForm(forms.ModelForm):
         self.fields['depth_draining_pipe_bio'].widget.attrs.update({'class':'labelshort','disabled':'false'})
         # self.fields['ground_water_level_bio'] = forms.FloatField(label="Ground water level (h14)",initial=0.0,required=False)
         # self.fields['ground_water_level_bio'].widget.attrs.update({'class':'labelshort'})
-        self.fields['area_stormwater_cons'] = forms.FloatField(label="Area storm water construction in relation to permeable surface",initial=2.5,required=False)
+        self.fields['area_stormwater_cons'] = forms.DecimalField(label="Area storm water construction in relation to permeable surface",initial=2.5,required=False)
         self.fields['area_stormwater_cons'].widget.attrs.update({'class':'labelshort'})
         self.fields['num_draining_pipes_stormwater'] = forms.FloatField(label="Number of draining pipes in storm water construction",initial=0.0,required=False)
         self.fields['num_draining_pipes_stormwater'].widget.attrs.update({'class':'labelshort'})

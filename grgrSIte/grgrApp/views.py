@@ -45,7 +45,7 @@ def registration_view(request):
                 passw  = fusername + fname
                 u = User.objects.create_user(username=fusername,password=passw,first_name=fname,last_name=flastname)
                 u.save()
-                return HttpResponseRedirect('grgrApp/thanks.html')
+                return render(request,'grgrApp/thanks.html')
     else:
         form = RegistrationForm()
 
@@ -303,6 +303,8 @@ def stormwater_view(request):
                     #return render(request,'grgrApp/summary.html',{'form':summaryform})
                 #context = {'form':ProjectForm}
                 #return render(request,'grgrApp/project.html',context)
+            else:
+                return render(request, 'grgrApp/stormwater.html',{'errors': errors,'form':form,})
         else:
             try:
                 fprname = request.session['projectname']
@@ -353,10 +355,10 @@ def summary_view(request):
             depth_draining  = thick_surf_course + thick_bedding_layer +  thick_base_layer + thick_subbase_layer - stormwater.depth_draining_pipe #D19
             ground_water = stormwater.ground_water_level - (thick_surf_course + thick_bedding_layer +  thick_base_layer + thick_subbase_layer) #D18
 
-            str_type_paving = "%s, h1 = %3.2f [mm]"%(dict_type_paving[type_paving - 1],thick_subbase_layer)
+            str_type_paving = "%s, h1 = %3.2f [mm]"%(dict_type_paving[type_paving - 1],thick_surf_course)
             str_bedding_layer = "2/4, h2 = %3.2f [mm]"%thick_bedding_layer
             str_unbound_base_layer = "0/32, h3 = %3.2f [mm]"%thick_base_layer
-            str_subbase_layer = "h4 = %3.2f [mm]"%(thick_surf_course)
+            str_subbase_layer = "h4 = %3.2f [mm]"%(thick_subbase_layer)
             str_thick_subbase_layer = "h4a = %3.2f [mm]"%(thick_subbase_layer - depth_draining)
             str_depth_draining_pipe = "h4b = %3.2f [mm]"%(depth_draining)
             str_distance_ground = "h5 = %3.2f [mm]"%ground_water
@@ -438,7 +440,7 @@ def summary_view(request):
                                 sum_climatic_zone = dict_climatic_zone[climatic_zone - 1],sum_frost_suceptibility_class = dict_frost_class[frost_class - 1],
                                 sum_design_duration_rain = str_desing_duration_rain,sum_design_intensity_rain = str_design_intensity_rain,sum_available_volume=str_available_volume,sum_required_volume = str_required_volume,
                                 sum_veredict = veredict1,
-                                sum_construction_type = dict_const_type[const_type],sum_height_open_volume=str_height_open_volume,
+                                sum_construction_type = dict_const_type[const_type-1],sum_height_open_volume=str_height_open_volume,
                                 sum_distance_overflow = str_dist_overflow,sum_thickness_vegetation_layer=str_vegetation_layer, sum_thickness_coarse_sand=str_thick_coarse_sand,
                                 sum_thickness_coarse_aggregate_26=str_thick_aggr_26,sum_thickness_coarse_aggregate_416=str_thick_aggr_416,
                                 sum_thickness_skeletal_soil=str_thick_skeletal_soil,

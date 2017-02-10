@@ -17,7 +17,6 @@ from xlwt import easyxf
 
 def thicknessSubbaseLayer(terras,traffic,subbase):
     calfile = open_workbook('grgrSite/grgrSIte/grgrApp/calculationgrgr.xlsx')
-    #calfile = open_workbook('grgrApp/grgrSIte/grgrApp/calculationgrgr.xlsx')
     sheet = calfile.sheet_by_index(0)
     if traffic == 1:
         cell = sheet.cell(18+terras,9)
@@ -38,14 +37,12 @@ def thicknessSubbaseLayer(terras,traffic,subbase):
 
 def thicknessBaseLayer(val):
     calfile = open_workbook('grgrSite/grgrSIte/grgrApp/calculationgrgr.xlsx')
-    #calfile = open_workbook('grgrApp/grgrSIte/grgrApp/calculationgrgr.xlsx')
     sheet = calfile.sheet_by_index(0)
     cell = sheet.cell(10+val,3)
     return cell.value
 
 def totalThickness(thicksubbase,thickbase,climatic,frost,thickcoarse,thickbedding):
     calfile = open_workbook('grgrSite/grgrSIte/grgrApp/calculationgrgr.xlsx')
-    #calfile = open_workbook('grgrApp/grgrSIte/grgrApp/calculationgrgr.xlsx')
     sheet = calfile.sheet_by_index(0)
     cell = sheet.cell(13+frost,17+climatic)
 
@@ -186,7 +183,7 @@ def PyDData(variables):
     if D107 < D108:
         D109 = "nej"
     else:
-        D109 = "kanske"
+        D109 = "ja"
 
     # R-part
     if variables[20] == 2:
@@ -293,13 +290,7 @@ def PyDData(variables):
     return DRespons
 
 def DData(variables):
-<<<<<<< HEAD
     vinnovafile = open_workbook('grgrSite/grgrSIte/grgrApp/vinnova.xls')
-    #vinnovafile = open_workbook('grgrApp/grgrSIte/grgrApp/vinnova.xls')
-=======
-    #vinnovafile = open_workbook('grgrSite/grgrSIte/grgrApp/vinnova.xls')
-    vinnovafile = open_workbook('grgrApp/grgrSIte/grgrApp/vinnova.xlsx')
->>>>>>> 3292f85078af7a51bcc25fdc6829c52d5f8f0fbb
     r_sheet = vinnovafile.sheet_by_index(0)
     #celltype = sheet.cell(11,3)
     #wb = copy(vinnovafile)
@@ -319,19 +310,11 @@ def DData(variables):
             #w_sheet.write(10+k,3,variables[k])
             r_sheet.cell(10+k,3).value = variables[k]
 
-<<<<<<< HEAD
-    wb.save('grgrSite/grgrSIte/grgrApp/vinnovatemp.xls')
-    #wb.save('grgrApp/grgrSIte/grgrApp/vinnovatemp.xls')
-    vinnovafile = open_workbook('grgrSite/grgrSIte/grgrApp/vinnovatemp.xls')
-    #vinnovafile = open_workbook('grgrApp/grgrSIte/grgrApp/vinnovatemp.xls')
-    r_sheet = vinnovafile.sheet_by_index(0)
-=======
     #wb.save('grgrSite/grgrSIte/grgrApp/vinnovatemp.xls')
     #wb.save('grgrApp/grgrSIte/grgrApp/vinnovatemp.xls')
     #vinnovafile = open_workbook('grgrSite/grgrSIte/grgrApp/vinnovatemp.xls')
     #vinnovafile = open_workbook('grgrApp/grgrSIte/grgrApp/vinnovatemp.xls')
     #r_sheet = vinnovafile.sheet_by_index(0)
->>>>>>> 3292f85078af7a51bcc25fdc6829c52d5f8f0fbb
     design_duration_rain = r_sheet.cell(105,3).value #D106
     available_volume = r_sheet.cell(107,3).value #D108
     required_volume = r_sheet.cell(106,3).value #D107
@@ -348,7 +331,7 @@ def DData(variables):
             design_intensity_rain_ditch = r_sheet.cell(k,16).value
     R102 = r_sheet.cell(101,17).value
     wb = copy(vinnovafile)
-    wb.save('grgrApp/grgrSIte/grgrApp/vinnovatemp.xlsx')
+    wb.save('grgrSite/grgrSIte/grgrApp/vinnovatemp.xlsx')
     #vinnovafile = open_workbook('grgrApp/grgrSIte/grgrApp/vinnovatemp.xls')
     DRespons = [design_duration_rain,available_volume,required_volume,D101,D109,design_duration_rain_ditch,available_volume_ditch,required_volume_ditch,R102,design_intensity_rain,design_intensity_rain_ditch]
     #print DRespons
